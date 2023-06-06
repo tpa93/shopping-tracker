@@ -8,7 +8,8 @@ namespace ShoppingTracker.Model
     {
         public string Name { get; set; }
         public int Count { get; set; }
-        public bool Checked { get; set; }   
+        public bool Checked { get; set; }
+
         public ShoppingItem(string name, int count) 
         { 
             this.Name = name;
@@ -16,5 +17,6 @@ namespace ShoppingTracker.Model
             this.Checked = false;
         
         }
+        public ShoppingItem() { }
     }
 }
