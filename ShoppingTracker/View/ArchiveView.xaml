@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShoppingTracker.Views.StatisticsView">
-
+             x:Class="ShoppingTracker.View.ArchiveView">
     <Shell.TitleView>
-        <Label Text="Shopping Statistics" 
+        <Label Text="Archive" 
                FontSize="24" 
                TextColor="White"
                HorizontalTextAlignment="Center" 
                VerticalTextAlignment="Center"/>
     </Shell.TitleView>
-    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="Archieve View"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

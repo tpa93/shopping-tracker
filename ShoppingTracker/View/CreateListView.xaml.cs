@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ShoppingTracker.Views
+namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ShoppingView : ContentPage
+    public partial class CreateListView : ContentPage
     {
-        public ShoppingView()
+        List<StackLayout> shoppingItems = new List<StackLayout>();
+
+        public CreateListView()
         {
             InitializeComponent();
+         
         }
+
+
     }
 }

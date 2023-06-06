@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ShoppingTracker.Views
+namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ArchiveView : ContentPage
+    public partial class ShoppingView : ContentPage
     {
-        // Test comment for creating GITHUB commit
-        public ArchiveView()
+        public ShoppingView()
         {
             InitializeComponent();
         }

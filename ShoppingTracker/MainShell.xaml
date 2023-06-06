@@ -7,14 +7,14 @@
 
     <TabBar>
         <Tab Title="Create List">
-            <ShellContent ContentTemplate="{DataTemplate pages:Views.CreateListView}"/>
+            <ShellContent ContentTemplate="{DataTemplate pages:View.CreateListView}"/>
         </Tab>
         <Tab Title="Go Shopping">
-            <ShellContent ContentTemplate="{DataTemplate pages:Views.ShoppingView}"/>
+            <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}"/>
         </Tab>
         <Tab Title="Archive">
-            <ShellContent Title="Recent Shopping " ContentTemplate="{DataTemplate pages:Views.ArchiveView}"/>
-            <ShellContent Title="Statistics" ContentTemplate="{DataTemplate pages:Views.StatisticsView}"/>
+            <ShellContent Title="Recent Shopping " ContentTemplate="{DataTemplate pages:View.ArchiveView}"/>
+            <ShellContent Title="Statistics" ContentTemplate="{DataTemplate pages:View.StatisticsView}"/>
         </Tab>
     </TabBar>
 
