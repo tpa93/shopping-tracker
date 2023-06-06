@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 
 namespace ShoppingTracker.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShoppingView : ContentPage
     {
         public ShoppingView()

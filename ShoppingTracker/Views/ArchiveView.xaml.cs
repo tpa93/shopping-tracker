@@ -8,9 +8,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ShoppingTracker.Views
-{ 
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ArchiveView : ContentPage
     {
+
         public ArchiveView()
         {
             InitializeComponent();

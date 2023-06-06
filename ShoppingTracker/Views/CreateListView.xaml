@@ -47,7 +47,7 @@
             </ScrollView>
         </StackLayout>
         <Button x:Name="addItem" Text="+"
-                AbsoluteLayout.LayoutFlags="PositionProportional"  
+                AbsoluteLayout.LayoutFlags="PositionProportional" 
                 AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"
                 BackgroundColor="#2196F3"
                 TextColor="White"
