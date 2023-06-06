@@ -12,7 +12,7 @@ namespace ShoppingTracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ArchiveView : ContentPage
     {
-
+        // Test comment for creating GITHUB commit
         public ArchiveView()
         {
             InitializeComponent();
