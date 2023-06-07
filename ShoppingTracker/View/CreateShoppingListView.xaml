@@ -33,25 +33,58 @@
                         <ListView.ItemTemplate >
                             <DataTemplate >
                                 <ViewCell>
-                                    <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center">
-                                        <!-- Binding ShoppingItems fields to view controls -->
-                                        <Label Text="{Binding Name}"/>
-                                        <Label Text="{Binding Count,StringFormat='{0}x'}"/>
-                                        <!-- Create image button to delete ShoppingItem-->
-                                        <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
-                                        <!-- The is the RemoveShoppingItemCommand method implemented -->
-                                        <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                        <!-- CommandParameter sets the parameter passed into the method bound to the command -->
-                                        <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
-                                        <ImageButton
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Binding ShoppingItems fields to view controls -->
+                                    <Label 
+                                        Grid.Column ="0" 
+                                        Text="{Binding Count,StringFormat='{0}x'}"
+                                        VerticalTextAlignment="Center"
+                                        />
+                                    
+                                    <Label 
+                                        Grid.Column ="1" 
+                                        Text="{Binding Name}"
+                                        VerticalTextAlignment="Center"
+                                        />
+                                    
+                                    <!-- Green check mark symbol -->
+                                    <Image
+                                        Grid.Column="2"
+                                        Source="green_check_mark.png"
+                                        IsVisible="false"
+                                        Scale="0.5"
+                                        BackgroundColor="Transparent"
+                                        />
+
+
+                                    <!-- Create image button to delete ShoppingItem-->
+                                    <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
+                                    <!-- The is the RemoveShoppingItemCommand method implemented -->
+                                    <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
+                                    <!-- CommandParameter sets the parameter passed into the method bound to the command -->
+                                    <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
+                                    <ImageButton
+                                            Grid.Column="3"
                                             Source="delete_shopping_item.png"
                                             BackgroundColor="Transparent"
                                             Scale="0.5"
                                             Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
                                             CommandParameter="{Binding .}"
                                             />
-                                    </FlexLayout>
-                                </ViewCell>
+
+                                </Grid>
+                            </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -77,13 +110,13 @@
                    Grid.Column="0"
                    Placeholder="Enter item"
                    HorizontalTextAlignment="Center"
-                   Text="{Binding NewShoppingItem.Name}"/>
+                   Text="{Binding NewItemName}"/>
             
             <Entry x:Name="InputItemCount"
                    Grid.Column="1"
                    Placeholder="1x"
                    HorizontalTextAlignment="Center"
-                   Text="{Binding NewShoppingItem.Count}"
+                   Text="{Binding NewItemCount}"
                    TextChanged="Entry_TextChanged"/>
         </Grid>
             

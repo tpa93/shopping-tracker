@@ -84,7 +84,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\green_check_mark.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingTracker\ShoppingTracker.csproj">
       <Project>{2D489A71-469B-4CDF-A8F1-F9BD089A8813}</Project>

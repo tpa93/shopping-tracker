@@ -7,10 +7,12 @@ using System.Windows.Input;
 using ShoppingTracker.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ShoppingTracker.ViewModel
 {
-    internal class CreateShoppingListViewModel
+    internal class CreateShoppingListViewModel:INotifyPropertyChanged
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; }
         
@@ -23,24 +25,60 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Add user input as NewShoppingItem to viewModl and view - NewShoppingItem is bound to .Text-property of user input control elements in view
-        public ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
-        public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
+        // Use public Properties to set the fields of the NewShoppingItem
+        // If value changed, raise event to notify the view
+        private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
 
+        
+        public string NewItemName 
+        { 
+            get { return this.NewShoppingItem.Name; } 
+            set { 
+                if (NewShoppingItem.Name != value)
+                {
+                    this.NewShoppingItem.Name = value;
+                    OnPropertyChanged();
+                } 
+            }
+        }
+
+        public string NewItemCount
+        {
+            get { return this.NewShoppingItem.Count; }
+            set { 
+                if (NewShoppingItem.Count != value)
+                {
+                    this.NewShoppingItem.Count = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // Fire event if property value bound to view is changed, to update view
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
+        public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
+        
         void AddNewShopingItem()
         {
-            if (NewShoppingItem.Count == null)
+            if (NewItemCount == "" || NewItemCount == null)
             {
-                NewShoppingItem.Count = "1";
+                NewItemCount = "1";
             }
-            if (NewShoppingItem.Name != null)
+            if (NewItemName != "" && NewItemName != null )
             {
-                ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
+                ShoppingItems.Add(NewShoppingItem);
+                
             }
 
-            NewShoppingItem.Name = null;
-            NewShoppingItem.Count = null;
-            
+            NewItemName = "";
+            NewItemCount = "";
         }
 
 
