@@ -10,11 +10,11 @@ using Xamarin.Forms.Xaml;
 
 namespace ShoppingTracker.ViewModel
 {
-    internal class ItemListViewModel
+    internal class CreateShoppingListViewModel
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; }
         
-        public ItemListViewModel() 
+        public CreateShoppingListViewModel() 
         { 
             ShoppingItems = new ObservableCollection<ShoppingItem>();
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
@@ -33,7 +33,7 @@ namespace ShoppingTracker.ViewModel
             {
                 NewShoppingItem.Count = "1";
             }
-            else if (NewShoppingItem.Name != null)
+            if (NewShoppingItem.Name != null)
             {
                 ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
             }

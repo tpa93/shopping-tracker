@@ -5,7 +5,7 @@
              x:Class="ShoppingTracker.View.CreateShoppingListView">
 
     <ContentPage.BindingContext>
-        <local:ItemListViewModel/>
+        <local:CreateShoppingListViewModel/>
     </ContentPage.BindingContext>
     
     <!-- Title of this (SHELL) View -->
