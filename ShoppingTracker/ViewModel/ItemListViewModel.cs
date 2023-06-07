@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShoppingTracker.Model;
+using ShoppingTracker.View;
 using Xamarin.Forms;
 
 namespace ShoppingTracker.ViewModel
@@ -16,12 +17,10 @@ namespace ShoppingTracker.ViewModel
         public ItemListViewModel() 
         { 
             ShoppingItems = new ObservableCollection<ShoppingItem>();
-            ShoppingItems.Add(new ShoppingItem("Test 1", 1));
-            ShoppingItems.Add(new ShoppingItem("Test 2", 2));
-            ShoppingItems.Add(new ShoppingItem("Test 3", 3));
+            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
+            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
+            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
         }
-
-
 
 
         // Fields of this object have to the be bound to the TEXT of the control which the user enters the new item
@@ -35,10 +34,17 @@ namespace ShoppingTracker.ViewModel
 
         void AddNewShopingItem()
         {
+            if (NewShoppingItem.Count == String.Empty)
+            {
+                NewShoppingItem.Count = "1";
+            }
+            else if (NewShoppingItem.Name == String.Empty)
+            {
+                
+            }
             ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
+            
         }
-
-
 
 
         public ICommand RemoveShoppingItemCommand => new Command(RemoveShoppingItem);

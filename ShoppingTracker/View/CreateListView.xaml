@@ -26,38 +26,64 @@
         <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <ScrollView>
                 <!-- Binding ShoppingItems object to the ListView -->
-                <ListView x:Name="ItemList" 
-                          ItemsSource="{Binding ShoppingItems}" 
-                          SelectionMode="None">
-                    <!-- Create template entry for a shopping item-->
-                    <ListView.ItemTemplate >
-                        <DataTemplate >
-                            <ViewCell>
-                                <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center">
-                                    <!-- Binding ShoppingItems fields to view controls -->
-                                    <Label Text="{Binding Name}"/>
-                                    <Label Text="{Binding Count,StringFormat='{0}x'}"/>
-                                    <!-- Create image button to delete ShoppingItem-->
-                                    <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
-                                    <!-- The is the RemoveShoppingItemCommand method implemented -->
-                                    <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                    <!-- CommandParameter sets the parameter passed into the Method bound to Command above -->
-                                    <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) (referencing the item in Observ. Coll) -->
-                                    <ImageButton
-                                        Source="delete_shopping_item.png"
-                                        BackgroundColor="Transparent"
-                                        Scale="0.5"
-                                        Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
-                                        CommandParameter="{Binding .}"
-                                        />
-                                </FlexLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    <ListView x:Name="ItemList" 
+                              ItemsSource="{Binding ShoppingItems}" 
+                              SelectionMode="None">
+                        <!-- Create template entry for a shopping item-->
+                        <ListView.ItemTemplate >
+                            <DataTemplate >
+                                <ViewCell>
+                                    <FlexLayout JustifyContent="SpaceBetween" AlignItems="Center">
+                                        <!-- Binding ShoppingItems fields to view controls -->
+                                        <Label Text="{Binding Name}"/>
+                                        <Label Text="{Binding Count,StringFormat='{0}x'}"/>
+                                        <!-- Create image button to delete ShoppingItem-->
+                                        <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
+                                        <!-- The is the RemoveShoppingItemCommand method implemented -->
+                                        <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
+                                        <!-- CommandParameter sets the parameter passed into the Method bound to Command above -->
+                                        <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) (referencing the item in Observ. Coll) -->
+                                        <ImageButton
+                                            Source="delete_shopping_item.png"
+                                            BackgroundColor="Transparent"
+                                            Scale="0.5"
+                                            Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
+                                            CommandParameter="{Binding .}"
+                                            />
+                                    </FlexLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
             </ScrollView>
         </StackLayout>
         
+        <!-- Adding control for user input -->
+        <Grid x:Name="GridAddItem" 
+              Padding="0,0,0,0"
+              AbsoluteLayout.LayoutFlags="PositionProportional,SizeProportional" 
+              AbsoluteLayout.LayoutBounds="0,0.99,0.75,0.075">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Entry x:Name="InputItem"
+                   Grid.Column="0"
+                   Placeholder="Item"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding NewShoppingItem.Name}"/>
+            <Entry Grid.Column="1"
+                   Placeholder="1x"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding NewShoppingItem.Count}"/>
+        </Grid>
+            
         <!-- Absolut positioned button, that does not scroll -->
         <!-- LayoutFlags "PP" sets the first to values of LayoutBounds(-> x <-, -> y <-,height,width) proportional -->
         <!-- So that the buttons position is positioned absolut depending from the display -->
@@ -68,6 +94,7 @@
                 BackgroundColor="#2196F3"
                 TextColor="White"
                 CornerRadius="40"
+                Command="{Binding AddShoppingItemCommand}"
                 />
         
     </AbsoluteLayout>

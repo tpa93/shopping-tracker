@@ -7,10 +7,10 @@ namespace ShoppingTracker.Model
     internal class ShoppingItem
     {
         public string Name { get; set; }
-        public int Count { get; set; }
+        public string Count { get; set; }
         public bool Checked { get; set; }
 
-        public ShoppingItem(string name, int count) 
+        public ShoppingItem(string name, string count) 
         { 
             this.Name = name;
             this.Count = count;
