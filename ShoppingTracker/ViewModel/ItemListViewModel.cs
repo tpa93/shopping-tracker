@@ -7,6 +7,7 @@ using System.Windows.Input;
 using ShoppingTracker.Model;
 using ShoppingTracker.View;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace ShoppingTracker.ViewModel
 {
@@ -38,13 +39,14 @@ namespace ShoppingTracker.ViewModel
             {
                 NewShoppingItem.Count = "1";
             }
-            else if (NewShoppingItem.Name == String.Empty)
+            else if (NewShoppingItem.Name != String.Empty)
             {
-                
+                ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
             }
-            ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
+            
             
         }
+
 
 
         public ICommand RemoveShoppingItemCommand => new Command(RemoveShoppingItem);

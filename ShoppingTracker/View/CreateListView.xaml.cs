@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingTracker.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,6 @@ namespace ShoppingTracker.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateListView : ContentPage
     {
-        List<StackLayout> shoppingItems = new List<StackLayout>();
 
         public CreateListView()
         {
@@ -20,6 +20,26 @@ namespace ShoppingTracker.View
          
         }
 
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (e.NewTextValue == "")
+            {
 
+            }
+        }
+
+        private void AddItemButton_Clicked(object sender, EventArgs e)
+        {
+            /*
+            if (InputItem.Text == "")
+            {
+                InputItem.BackgroundColor = Color.FromHex("#da6c7b");
+            }
+            else
+            {
+                InputItem.BackgroundColor = Color.Transparent;
+            }
+            */
+        }
     }
 }

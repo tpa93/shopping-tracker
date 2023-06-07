@@ -75,13 +75,16 @@
             
             <Entry x:Name="InputItem"
                    Grid.Column="0"
-                   Placeholder="Item"
+                   Placeholder="Enter item"
                    HorizontalTextAlignment="Center"
                    Text="{Binding NewShoppingItem.Name}"/>
-            <Entry Grid.Column="1"
+            
+            <Entry x:Name="InputItemCount"
+                   Grid.Column="1"
                    Placeholder="1x"
                    HorizontalTextAlignment="Center"
-                   Text="{Binding NewShoppingItem.Count}"/>
+                   Text="{Binding NewShoppingItem.Count}"
+                   TextChanged="Entry_TextChanged"/>
         </Grid>
             
         <!-- Absolut positioned button, that does not scroll -->
@@ -93,6 +96,7 @@
                 AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"
                 BackgroundColor="#2196F3"
                 TextColor="White"
+                Clicked="AddItemButton_Clicked"
                 CornerRadius="40"
                 Command="{Binding AddShoppingItemCommand}"
                 />
