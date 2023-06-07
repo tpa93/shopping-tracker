@@ -19,6 +19,9 @@
     <Compile Update="View\ArchiveView.xaml.cs">
       <DependentUpon>ArchiveView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="View\CreateShoppingListView.xaml.cs">
+      <DependentUpon>CreateShoppingListView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +31,7 @@
     <EmbeddedResource Update="View\ArchiveView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\CreateListView.xaml">
+    <EmbeddedResource Update="View\CreateShoppingListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\ShoppingView.xaml">

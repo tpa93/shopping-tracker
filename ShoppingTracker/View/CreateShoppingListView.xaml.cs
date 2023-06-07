@@ -11,10 +11,10 @@ using Xamarin.Forms.Xaml;
 namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateListView : ContentPage
+    public partial class CreateShoppingListView : ContentPage
     {
 
-        public CreateListView()
+        public CreateShoppingListView()
         {
             InitializeComponent();
          

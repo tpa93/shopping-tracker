@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingTracker.ViewModel"
-             x:Class="ShoppingTracker.View.CreateListView">
+             x:Class="ShoppingTracker.View.CreateShoppingListView">
 
     <ContentPage.BindingContext>
         <local:ItemListViewModel/>
@@ -41,8 +41,8 @@
                                         <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
                                         <!-- The is the RemoveShoppingItemCommand method implemented -->
                                         <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                        <!-- CommandParameter sets the parameter passed into the Method bound to Command above -->
-                                        <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) (referencing the item in Observ. Coll) -->
+                                        <!-- CommandParameter sets the parameter passed into the method bound to the command -->
+                                        <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
                                         <ImageButton
                                             Source="delete_shopping_item.png"
                                             BackgroundColor="Transparent"

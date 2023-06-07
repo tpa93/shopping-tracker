@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShoppingTracker.Model;
-using ShoppingTracker.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,31 +23,28 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Fields of this object have to the be bound to the TEXT of the control which the user enters the new item
+        // Add user input as NewShoppingItem to viewModl and view - NewShoppingItem is bound to .Text-property of user input control elements in view
         public ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
-        
-        //  Create Command
-        /*  The following syntax binds this command on XAML File of CreateListView:
-            ReturnCommand = {Binding AddShoppingItemCommand}
-            Bind this command to the the input control where the user inputs the NewShoppingItem    */
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
 
         void AddNewShopingItem()
         {
-            if (NewShoppingItem.Count == String.Empty)
+            if (NewShoppingItem.Count == null)
             {
                 NewShoppingItem.Count = "1";
             }
-            else if (NewShoppingItem.Name != String.Empty)
+            else if (NewShoppingItem.Name != null)
             {
                 ShoppingItems.Add(new ShoppingItem(NewShoppingItem.Name, NewShoppingItem.Count));
             }
-            
+
+            NewShoppingItem.Name = null;
+            NewShoppingItem.Count = null;
             
         }
 
 
-
+        // Remove ShoppingItem via trash bin image (button) - Command is bound in CreateShoppingListView.xaml on ImageButton
         public ICommand RemoveShoppingItemCommand => new Command(RemoveShoppingItem);
 
         void RemoveShoppingItem(object o)
