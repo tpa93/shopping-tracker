@@ -9,6 +9,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 namespace ShoppingTracker.ViewModel
 {
@@ -22,13 +25,24 @@ namespace ShoppingTracker.ViewModel
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
+            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
+            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
+            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
+            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
+            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
+            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
+            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
+            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
         }
 
 
         // Use public Properties to set the fields of the NewShoppingItem
         // If value changed, raise event to notify the view
         private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
-
         
         public string NewItemName 
         { 
@@ -36,7 +50,7 @@ namespace ShoppingTracker.ViewModel
             set { 
                 if (NewShoppingItem.Name != value)
                 {
-                    this.NewShoppingItem.Name = value;
+                    this.NewShoppingItem.Name = value ;
                     OnPropertyChanged();
                 } 
             }
@@ -62,6 +76,11 @@ namespace ShoppingTracker.ViewModel
         }
 
 
+
+
+
+
+
         // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
         
@@ -69,7 +88,8 @@ namespace ShoppingTracker.ViewModel
         {
             if (NewItemCount == "" || NewItemCount == null)
             {
-                NewItemCount = "1";
+                // Update fiel direct, to not trigger unnecessary event 
+                NewShoppingItem.Count = "1";
             }
             if (NewItemName != "" && NewItemName != null )
             {
@@ -82,6 +102,10 @@ namespace ShoppingTracker.ViewModel
         }
 
 
+
+
+
+
         // Remove ShoppingItem via trash bin image (button) - Command is bound in CreateShoppingListView.xaml on ImageButton
         public ICommand RemoveShoppingItemCommand => new Command(RemoveShoppingItem);
 
@@ -92,5 +116,61 @@ namespace ShoppingTracker.ViewModel
         }
 
 
+
+
+
+
+        // Process ShoppingItems according to choosed option on ActionSheet
+        public ICommand ProcessShoppingItemsCommand => new Command(ProcessShoppingItems);
+
+        async void ProcessShoppingItems()
+        {
+
+            string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping");
+
+            if (action != "Cancel")
+            { 
+                ShoppingItemList shoppingItemList = new ShoppingItemList(ShoppingItems);
+
+                if (action == "Go shopping")
+                {
+                    // Transfer current data state of ObservableCollection to "ShoppingView"
+
+                }
+                else 
+                {
+                    // Ask user for template name and set date created
+                    shoppingItemList.Name = await PromptUserForTemplateName();
+
+                    if (action == "Save as template")
+                    {
+                        // Save current data state of ObservableCollection as JSON on local device
+                    }
+
+                    else if (action == "Save as template & go shopping")
+                    {
+                        // Save current data state of ObservableCollection as JSON on local device
+
+                        // Transfer current data state of ObservableCollection to "ShoppingView"
+
+                    }
+                }
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Operation aborted", null, "Ok");
+            }
+        }
+
+        async Task<string> PromptUserForTemplateName()
+        {
+            // Prompt user for template name
+            string templateName = string.Empty;
+            while (templateName == string.Empty)
+            {
+                templateName = await Application.Current.MainPage.DisplayPromptAsync("Define template name", "Name:");
+            }
+            return templateName;
+        }
     }
 }

@@ -19,27 +19,5 @@ namespace ShoppingTracker.View
             InitializeComponent();
          
         }
-
-        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (e.NewTextValue == "")
-            {
-
-            }
-        }
-
-        private void AddItemButton_Clicked(object sender, EventArgs e)
-        {
-            /*
-            if (InputItem.Text == "")
-            {
-                InputItem.BackgroundColor = Color.FromHex("#da6c7b");
-            }
-            else
-            {
-                InputItem.BackgroundColor = Color.Transparent;
-            }
-            */
-        }
     }
 }

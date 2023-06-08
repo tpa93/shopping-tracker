@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingTracker.View.ArchiveView">
+    
     <Shell.TitleView>
         <Label Text="Archive" 
                FontSize="24" 
@@ -9,6 +10,7 @@
                HorizontalTextAlignment="Center" 
                VerticalTextAlignment="Center"/>
     </Shell.TitleView>
+    
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Archieve View"

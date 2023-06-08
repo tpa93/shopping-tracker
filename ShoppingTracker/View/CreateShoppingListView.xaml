@@ -23,43 +23,42 @@
         
         <!-- ListView with binding to ItemListViewModel.cs/ShoppingItems (Observable Coll.) to get updated
                 when the ShoppingItems (Obs.Coll.) in the ViewModel gets updated -->
-        <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ScrollView>
-                <!-- Binding ShoppingItems object to the ListView -->
-                    <ListView x:Name="ItemList" 
+        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
+            <!-- Binding ShoppingItems object to the ListView -->
+            <ListView x:Name="ItemList" 
                               ItemsSource="{Binding ShoppingItems}" 
                               SelectionMode="None">
-                        <!-- Create template entry for a shopping item-->
-                        <ListView.ItemTemplate >
-                            <DataTemplate >
-                                <ViewCell>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
+                <!-- Create template entry for a shopping item-->
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="6*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="6*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
 
-                                    <!-- Binding ShoppingItems fields to view controls -->
-                                    <Label 
+                                <!-- Binding ShoppingItems fields to view controls -->
+                                <Label 
                                         Grid.Column ="0" 
                                         Text="{Binding Count,StringFormat='{0}x'}"
                                         VerticalTextAlignment="Center"
                                         />
-                                    
-                                    <Label 
+
+                                <Label 
                                         Grid.Column ="1" 
                                         Text="{Binding Name}"
                                         VerticalTextAlignment="Center"
                                         />
-                                    
-                                    <!-- Green check mark symbol -->
-                                    <Image
+
+                                <!-- Green check mark symbol -->
+                                <Image
                                         Grid.Column="2"
                                         Source="green_check_mark.png"
                                         IsVisible="false"
@@ -68,13 +67,13 @@
                                         />
 
 
-                                    <!-- Create image button to delete ShoppingItem-->
-                                    <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
-                                    <!-- The is the RemoveShoppingItemCommand method implemented -->
-                                    <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                    <!-- CommandParameter sets the parameter passed into the method bound to the command -->
-                                    <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
-                                    <ImageButton
+                                <!-- Create image button to delete ShoppingItem-->
+                                <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
+                                <!-- The is the RemoveShoppingItemCommand method implemented -->
+                                <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
+                                <!-- CommandParameter sets the parameter passed into the method bound to the command -->
+                                <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
+                                <ImageButton
                                             Grid.Column="3"
                                             Source="delete_shopping_item.png"
                                             BackgroundColor="Transparent"
@@ -83,19 +82,18 @@
                                             CommandParameter="{Binding .}"
                                             />
 
-                                </Grid>
-                            </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-            </ScrollView>
-        </StackLayout>
-        
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+
         <!-- Adding control for user input -->
         <Grid x:Name="GridAddItem" 
               Padding="0,0,0,0"
               AbsoluteLayout.LayoutFlags="PositionProportional,SizeProportional" 
-              AbsoluteLayout.LayoutBounds="0,0.99,0.75,0.075">
+              AbsoluteLayout.LayoutBounds="0,0.95,0.75,0.075">
             
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -108,31 +106,47 @@
             
             <Entry x:Name="InputItem"
                    Grid.Column="0"
+                   FontAttributes="Italic"
                    Placeholder="Enter item"
                    HorizontalTextAlignment="Center"
-                   Text="{Binding NewItemName}"/>
+                   Text="{Binding NewItemName}"
+                   />
             
             <Entry x:Name="InputItemCount"
                    Grid.Column="1"
+                   FontAttributes="Italic"
                    Placeholder="1x"
                    HorizontalTextAlignment="Center"
                    Text="{Binding NewItemCount}"
-                   TextChanged="Entry_TextChanged"/>
+                   />
         </Grid>
             
         <!-- Absolut positioned button, that does not scroll -->
         <!-- LayoutFlags "PP" sets the first to values of LayoutBounds(-> x <-, -> y <-,height,width) proportional -->
         <!-- So that the buttons position is positioned absolut depending from the display -->
         <!-- 0,0 = upper left corner & 1,1 downer right corner-->
-        <Button x:Name="AddItem" Text="+"
-                AbsoluteLayout.LayoutFlags="PositionProportional" 
-                AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"
-                BackgroundColor="#2196F3"
-                TextColor="White"
-                Clicked="AddItemButton_Clicked"
-                CornerRadius="40"
-                Command="{Binding AddShoppingItemCommand}"
-                />
+        <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
+                     AbsoluteLayout.LayoutBounds="0.95,1"
+                     >
+            <Button x:Name="ProcessList"
+                    Text="&#x1F4BE;"
+                    BackgroundColor="#2196F3"
+                    CornerRadius="40"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    Command="{Binding ProcessShoppingItemsCommand}"
+                    />
+
+            <Button x:Name="AddItem" 
+                    Text="+"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="40"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    Command="{Binding AddShoppingItemCommand}"
+                    />
+        </StackLayout>
         
     </AbsoluteLayout>
 
