@@ -10,42 +10,48 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using ShoppingTracker.Services;
 
 namespace ShoppingTracker.ViewModel
 {
-    internal class CreateShoppingListViewModel:INotifyPropertyChanged
+    internal class CreateShoppingListViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; }
-        
-        public CreateShoppingListViewModel() 
-        { 
+
+        public CreateShoppingListViewModel()
+        {
+            
             ShoppingItems = new ObservableCollection<ShoppingItem>();
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            
+            
         }
 
 
         // Use public Properties to set the fields of the NewShoppingItem
         // If value changed, raise event to notify the view
         private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
-        
-        public string NewItemName 
-        { 
-            get { return this.NewShoppingItem.Name; } 
-            set { 
+
+        public string NewItemName
+        {
+            get { return this.NewShoppingItem.Name; }
+            set
+            {
                 if (NewShoppingItem.Name != value)
                 {
-                    this.NewShoppingItem.Name = value ;
+                    this.NewShoppingItem.Name = value;
                     OnPropertyChanged();
-                } 
+                }
             }
         }
 
         public string NewItemCount
         {
             get { return this.NewShoppingItem.Count; }
-            set { 
+            set
+            {
                 if (NewShoppingItem.Count != value)
                 {
                     this.NewShoppingItem.Count = value;
@@ -69,7 +75,7 @@ namespace ShoppingTracker.ViewModel
 
         // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
-        
+
         void AddNewShopingItem()
         {
             if (NewItemCount == "" || NewItemCount == null)
@@ -77,10 +83,10 @@ namespace ShoppingTracker.ViewModel
                 // Update fiel direct, to not trigger unnecessary event 
                 NewShoppingItem.Count = "1";
             }
-            if (NewItemName != "" && NewItemName != null )
+            if (NewItemName != "" && NewItemName != null)
             {
                 ShoppingItems.Add(NewShoppingItem);
-                
+
             }
 
             NewItemName = "";
@@ -115,7 +121,7 @@ namespace ShoppingTracker.ViewModel
             string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping");
 
             if (action != "Cancel")
-            { 
+            {
                 ShoppingItemList shoppingItemList = new ShoppingItemList(ShoppingItems);
 
                 if (action == "Go shopping")
@@ -123,7 +129,7 @@ namespace ShoppingTracker.ViewModel
                     // Transfer current data state of ObservableCollection to "ShoppingView"
 
                 }
-                else 
+                else
                 {
                     // Prompt user for template name and validate input
                     shoppingItemList.Name = await PromptUserForTemplateName();
@@ -136,6 +142,8 @@ namespace ShoppingTracker.ViewModel
                     else if (action == "Save as template")
                     {
                         // Save current data state of ObservableCollection as JSON on local device
+                        await ShoppingItemListTemplateHandler.SaveShoppingItemListTemplate(shoppingItemList);
+
                     }
 
                     else if (action == "Save as template & go shopping")
@@ -163,6 +171,5 @@ namespace ShoppingTracker.ViewModel
             }
             return templateName;
         }
-
     }
 }

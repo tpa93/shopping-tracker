@@ -11,25 +11,31 @@ using Xamarin.Forms;
 
 namespace ShoppingTracker.Services
 {
-    internal class ShoppingItemListTemplateHandler
+    internal static class ShoppingItemListTemplateHandler
     {
-        public ShoppingItemListTemplateHandler() 
-        { 
+
         
-        }
-        
-        public async Task<ShoppingItemList> SaveShoppingItemListTemplate(ShoppingItemList shoppingItemList)
+        // Save ShoppingItemList (template) to LocalStorage
+        public static async Task<bool> SaveShoppingItemListTemplate(ShoppingItemList shoppingItemList)
         {
-            string json = JsonConvert.SerializeObject(shoppingItemList);
+            string jsonString = JsonConvert.SerializeObject(shoppingItemList);
 
             IFolder root = PCLStorage.FileSystem.Current.LocalStorage;
-            IFolder temp_folder = await root.CreateFolderAsync("shopping_items_templates", CreationCollisionOption.OpenIfExists);
+            IFile tempFile = await root.CreateFileAsync(shoppingItemList.Name + ".txt", CreationCollisionOption.FailIfExists);
+            await tempFile.WriteAllTextAsync(jsonString);
+
+            return true;
         }
 
-        public ShoppingItemList GetShoppingItemListTemplate(string templateName) 
+        // Get ShoppingItemList (template) from LocalStorage
+        public static async Task<ShoppingItemList> GetShoppingItemListTemplate(string templateName) 
         {
-            string jsonString = "";
+            IFolder root = PCLStorage.FileSystem.Current.LocalStorage;
+            IFile tempFile = await root.GetFileAsync(templateName + ".txt");
+            string jsonString = await tempFile.ReadAllTextAsync();
+
             ShoppingItemList shoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(jsonString);
+
             return shoppingItemList;
          
         }
