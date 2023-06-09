@@ -6,12 +6,10 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShoppingTracker.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Net.NetworkInformation;
+using Xamarin.Essentials;
 
 namespace ShoppingTracker.ViewModel
 {
@@ -22,18 +20,6 @@ namespace ShoppingTracker.ViewModel
         public CreateShoppingListViewModel() 
         { 
             ShoppingItems = new ObservableCollection<ShoppingItem>();
-            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
-            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
-            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
-            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
-            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
-            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
-            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
-            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
-            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
-            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
-            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
-            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
@@ -139,10 +125,15 @@ namespace ShoppingTracker.ViewModel
                 }
                 else 
                 {
-                    // Ask user for template name and set date created
+                    // Prompt user for template name and validate input
                     shoppingItemList.Name = await PromptUserForTemplateName();
 
-                    if (action == "Save as template")
+                    if (shoppingItemList.Name == null || shoppingItemList.Name == "")
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Operation aborted!", null, "Ok");
+                    }
+
+                    else if (action == "Save as template")
                     {
                         // Save current data state of ObservableCollection as JSON on local device
                     }
@@ -158,7 +149,7 @@ namespace ShoppingTracker.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Operation aborted", null, "Ok");
+                await Application.Current.MainPage.DisplayAlert("Operation aborted!", null, "Ok");
             }
         }
 
@@ -172,5 +163,6 @@ namespace ShoppingTracker.ViewModel
             }
             return templateName;
         }
+
     }
 }
