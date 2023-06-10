@@ -31,7 +31,7 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Use public Properties to set the fields of the NewShoppingItem
+        // Use public Properties to get access to OnPropertyChanged, to clear user input fields after adding an item
         private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
 
         public string NewItemName
