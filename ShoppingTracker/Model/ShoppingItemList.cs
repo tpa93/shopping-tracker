@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShoppingTracker.Model
 {
-    internal class ShoppingItemList
+    public class ShoppingItemList
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; } = new ObservableCollection<ShoppingItem>();
         public string Name { get; set; }

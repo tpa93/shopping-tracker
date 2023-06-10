@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using PCLStorage;
 using ShoppingTracker.Services;
 
 namespace ShoppingTracker.ViewModel
@@ -31,7 +32,6 @@ namespace ShoppingTracker.ViewModel
 
 
         // Use public Properties to set the fields of the NewShoppingItem
-        // If value changed, raise event to notify the view
         private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
 
         public string NewItemName
@@ -60,18 +60,12 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
-        // Fire event if property value bound to view is changed, to update view
+        // Fire event if property bound to view is changed, to update view
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-
-
-
-
 
         // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
@@ -80,7 +74,7 @@ namespace ShoppingTracker.ViewModel
         {
             if (NewItemCount == "" || NewItemCount == null)
             {
-                // Update fiel direct, to not trigger unnecessary event 
+                // Update field direct, to not trigger unnecessary event 
                 NewShoppingItem.Count = "1";
             }
             if (NewItemName != "" && NewItemName != null)
@@ -89,6 +83,7 @@ namespace ShoppingTracker.ViewModel
 
             }
 
+            // Clear user input fields with OnPropertyChanged()
             NewItemName = "";
             NewItemCount = "";
         }
@@ -129,24 +124,28 @@ namespace ShoppingTracker.ViewModel
                     // Transfer current data state of ObservableCollection to "ShoppingView"
 
                 }
+
                 else
                 {
                     // Prompt user for template name and validate input
                     shoppingItemList.Name = await PromptUserForTemplateName();
 
-                    if (shoppingItemList.Name == null || shoppingItemList.Name == "")
+                    if (action == "Save as template" && shoppingItemList.Name != null)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Operation aborted!", null, "Ok");
+                        /*
+                        string fileName = shoppingItemList.Name + "11.txt";
+
+                        bool check = await FileHandler.SaveSILTemplateOnDevice(fileName, shoppingItemList);
+
+                        ShoppingItemList newShoppingItemList = new ShoppingItemList();
+                        newShoppingItemList = await FileHandler.GetSILTemplateFromDevice(fileName);
+                        */
+
+
+
                     }
 
-                    else if (action == "Save as template")
-                    {
-                        // Save current data state of ObservableCollection as JSON on local device
-                        await ShoppingItemListTemplateHandler.SaveShoppingItemListTemplate(shoppingItemList);
-
-                    }
-
-                    else if (action == "Save as template & go shopping")
+                    else if (action == "Save as template & go shopping" && shoppingItemList.Name != null)
                     {
                         // Save current data state of ObservableCollection as JSON on local device
 
@@ -165,9 +164,23 @@ namespace ShoppingTracker.ViewModel
         {
             // Prompt user for template name
             string templateName = string.Empty;
+
+            // Get all saved template names
+            List<string> blockedTemplateNames = await FileHandler.GetAllSILTemplateNames();
+
+            // Validate user input
             while (templateName == string.Empty)
             {
                 templateName = await Application.Current.MainPage.DisplayPromptAsync("Define template name", "Name:");
+
+                if(templateName == string.Empty)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Please define a name", null, "Ok");
+                }
+                if (blockedTemplateNames.Contains(templateName))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Template name already existing", null, "Ok");
+                }
             }
             return templateName;
         }

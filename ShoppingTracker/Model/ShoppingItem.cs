@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingTracker.Model
 {   
-    internal class ShoppingItem
+    public class ShoppingItem
     {
         public string Name { get; set; }
         public string Count { get; set; }
