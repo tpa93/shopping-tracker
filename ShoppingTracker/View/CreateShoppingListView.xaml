@@ -49,7 +49,7 @@
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <ViewCell>
-                            <Grid>
+                            <Grid Padding="5,0,5,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
@@ -63,25 +63,27 @@
 
                                 <!-- Binding ShoppingItems fields to view controls -->
                                 <Label 
-                                        Grid.Column ="0" 
-                                        Text="{Binding Count,StringFormat='{0}x'}"
-                                        VerticalTextAlignment="Center"
-                                        />
+                                    Grid.Column ="0" 
+                                    Text="{Binding Count,StringFormat='{0}x'}"
+                                    VerticalTextAlignment="Center"
+                                    FontAttributes="Bold"
+                                    />
 
                                 <Label 
-                                        Grid.Column ="1" 
-                                        Text="{Binding Name}"
-                                        VerticalTextAlignment="Center"
-                                        />
+                                    Grid.Column ="1" 
+                                    Text="{Binding Name}"
+                                    VerticalTextAlignment="Center"
+                                    FontSize="16"
+                                    />
 
                                 <!-- Green check mark symbol -->
                                 <Image
-                                        Grid.Column="2"
-                                        Source="green_check_mark.png"
-                                        IsVisible="false"
-                                        Scale="0.5"
-                                        BackgroundColor="Transparent"
-                                        />
+                                    Grid.Column="2"
+                                    Source="green_check_mark.png"
+                                    IsVisible="false"
+                                    Scale="0.5"
+                                    BackgroundColor="Transparent"
+                                    />
 
 
                                 <!-- Create image button to delete ShoppingItem-->
