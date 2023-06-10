@@ -23,11 +23,12 @@ namespace ShoppingTracker.ViewModel
         {
             
             ShoppingItems = new ObservableCollection<ShoppingItem>();
+
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
-            
-            
+
+
         }
 
 
@@ -79,7 +80,8 @@ namespace ShoppingTracker.ViewModel
             }
             if (NewItemName != "" && NewItemName != null)
             {
-                ShoppingItems.Add(NewShoppingItem);
+                // Use temp item, because the values of NewShoppingItem will be overwritten, when clearing properties in the step afterwards
+                ShoppingItems.Add(new ShoppingItem(NewItemName, NewItemCount));
 
             }
 
@@ -112,6 +114,11 @@ namespace ShoppingTracker.ViewModel
 
         async void ProcessShoppingItems()
         {
+            if (ShoppingItems.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("No shopping items in template to proceed", null, "Ok");
+                return;
+            }
 
             // Prompt user how to proceed with template
             string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping");

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingTracker.UserControls.ShoppingListScrollView">
+    
+    <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
+        <!-- Binding ShoppingItems object to the ListView -->
+        <ListView x:Name="ItemList"
+                              SelectionMode="None">
+            <!-- Create template entry for a shopping item-->
+            <ListView.ItemTemplate >
+                <DataTemplate >
+                    <ViewCell>
+                        <Grid Padding="5,0,5,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Binding ShoppingItems fields to view controls -->
+                            <Label 
+                                    Grid.Column ="0" 
+                                    Text="{Binding Count,StringFormat='{0}x'}"
+                                    VerticalTextAlignment="Center"
+                                    FontAttributes="Bold"
+                                    />
+
+                            <Label 
+                                    Grid.Column ="1" 
+                                    Text="{Binding Name}"
+                                    VerticalTextAlignment="Center"
+                                    FontSize="16"
+                                    />
+
+                            <!-- Green check mark symbol -->
+                            <Image
+                                    Grid.Column="2"
+                                    Source="green_check_mark.png"
+                                    IsVisible="false"
+                                    Scale="0.5"
+                                    BackgroundColor="Transparent"
+                                    />
+
+
+                            <!-- Create image button to delete ShoppingItem-->
+                            <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
+                            <!-- The is the RemoveShoppingItemCommand method implemented -->
+                            <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
+                            <!-- CommandParameter sets the parameter passed into the method bound to the command -->
+                            <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
+                            <ImageButton
+                                            Grid.Column="3"
+                                            Source="delete_shopping_item.png"
+                                            BackgroundColor="Transparent"
+                                            Scale="0.5"
+                                            Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
+                                            CommandParameter="{Binding .}"
+                                            />
+
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
+    
+</ContentView>
