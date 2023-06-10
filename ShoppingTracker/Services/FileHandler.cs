@@ -11,30 +11,46 @@ namespace ShoppingTracker.Services
     // ShoppingItemListTemplateHandler
     public static class FileHandler
     {
-        public async static Task<bool> SaveSILTemplateOnDevice(string fileName, ShoppingItemList shoppingItemList)
+        // Save ShoppingItemListTemplate in templates folder on local device
+        public async static Task<bool> SaveSILTemplateOnDevice(ShoppingItemList shoppingItemList)
         {
-            IFolder folder = PCLStorage.FileSystem.Current.LocalStorage;
-            IFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.FailIfExists);
+            // Create file
+            IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
+            string templateFile = shoppingItemList.Name + ".txt";
+            IFile file = await folder.CreateFileAsync(templateFile, CreationCollisionOption.FailIfExists);
+
+            // Convert object to JSON-string and write file
             string json = JsonConvert.SerializeObject(shoppingItemList);
             await file.WriteAllTextAsync(json);
+            
             return true;
 
         }
 
-        public async static Task<ShoppingItemList> GetSILTemplateFromDevice(string fileName)
+        // Get ShoppingItemListTemplate from templates folder on local device
+        public async static Task<ShoppingItemList> GetSILTemplateFromDevice(string templateName)
         {
-            IFolder folder = PCLStorage.FileSystem.Current.LocalStorage;
+            // Get file
+            IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
+            string fileName = templateName + ".txt";
             IFile file = await folder.GetFileAsync(fileName);
+
+            // Read file and convert to object from JSON-string
             string json = await file.ReadAllTextAsync();
-            ShoppingItemList newShoppingItemList = new ShoppingItemList();
-            newShoppingItemList= JsonConvert.DeserializeObject<ShoppingItemList>(json);
+            ShoppingItemList newShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
+            newShoppingItemList.Name = templateName;
+
             return newShoppingItemList;
         }
 
+        // Get all template names from templates folder on local device
         public async static Task<List<string>> GetAllSILTemplateNames()
         {
-            IFolder folder = PCLStorage.FileSystem.Current.LocalStorage;
+            // Get alle template file names
+            IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
             IList<IFile> files = await folder.GetFilesAsync();
+
+            // Separate file typ ending from string
             List<string> templateNames = new List<string>();
 
             foreach (IFile file in files) 

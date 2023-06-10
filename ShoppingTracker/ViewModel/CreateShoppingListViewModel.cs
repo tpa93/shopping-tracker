@@ -113,12 +113,14 @@ namespace ShoppingTracker.ViewModel
         async void ProcessShoppingItems()
         {
 
+            // Prompt user how to proceed with template
             string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping");
 
             if (action != "Cancel")
             {
                 ShoppingItemList shoppingItemList = new ShoppingItemList(ShoppingItems);
 
+                // Proceed with non-saved template to work with
                 if (action == "Go shopping")
                 {
                     // Transfer current data state of ObservableCollection to "ShoppingView"
@@ -127,22 +129,24 @@ namespace ShoppingTracker.ViewModel
 
                 else
                 {
-                    // Prompt user for template name and validate input
+                    // Prompt user for template name
                     shoppingItemList.Name = await PromptUserForTemplateName();
 
+                    // Save list as template
                     if (action == "Save as template" && shoppingItemList.Name != null)
                     {
-                        /*
-                        string fileName = shoppingItemList.Name + "11.txt";
 
-                        bool check = await FileHandler.SaveSILTemplateOnDevice(fileName, shoppingItemList);
-
-                        ShoppingItemList newShoppingItemList = new ShoppingItemList();
-                        newShoppingItemList = await FileHandler.GetSILTemplateFromDevice(fileName);
-                        */
-
-
-
+                        // Save template and check for success
+                        bool check = await FileHandler.SaveSILTemplateOnDevice(shoppingItemList);
+                        if (!check)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Cancel");
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Template saved", null, "Ok");
+                        }
+                        return;
                     }
 
                     else if (action == "Save as template & go shopping" && shoppingItemList.Name != null)
