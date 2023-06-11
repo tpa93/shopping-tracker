@@ -20,7 +20,6 @@ namespace ShoppingTracker.UserControls
             InitializeComponent();
         }
 
-        
         // Property exposed by the control - to use in XAML file
         public ObservableCollection<ShoppingItem> ShoppingItemsDataSource { get; set; }
 
