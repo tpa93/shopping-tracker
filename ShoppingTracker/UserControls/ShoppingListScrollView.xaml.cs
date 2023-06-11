@@ -29,7 +29,7 @@ namespace ShoppingTracker.UserControls
         // Create bindable property that is tracked by the Xamarin.Forms property system
         public static readonly BindableProperty ShoppingItemsDataSourceProperty = BindableProperty.Create(nameof(ShoppingItemsDataSource), typeof(ObservableCollection<ShoppingItem>), typeof(ShoppingListScrollView), null, BindingMode.TwoWay, null, ItemsSourcePropertyChanged);
         
-        // Event that should get fired when data in the observable collection changes
+        // Event that gets fired when data in the observable collection changes
         private static void ItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object  newValue)
         {
             var control = (ShoppingListScrollView)bindable;
