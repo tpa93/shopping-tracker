@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:ShoppingTracker.UserControls"
+             xmlns:local="clr-namespace:ShoppingTracker.ViewModel"
              x:Class="ShoppingTracker.View.ShoppingView">
 
+
+    <ContentPage.BindingContext>
+        <local:ShoppingViewModel/>
+    </ContentPage.BindingContext>
+    
     <Shell.TitleView>
         <Label Text="Shopping" 
                FontSize="24" 
@@ -10,12 +17,14 @@
                HorizontalTextAlignment="Center" 
                VerticalTextAlignment="Center"/>
     </Shell.TitleView>
-    
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Shopping View"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout>
+
+            <control:ShoppingListScrollView
+                ShoppingItemsDataSource="{Binding ShoppingItems}"/>
+
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

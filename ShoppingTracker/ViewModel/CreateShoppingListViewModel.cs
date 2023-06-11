@@ -28,7 +28,6 @@ namespace ShoppingTracker.ViewModel
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
 
-
         }
 
 

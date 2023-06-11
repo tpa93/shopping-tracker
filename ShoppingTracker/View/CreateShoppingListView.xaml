@@ -9,7 +9,7 @@
         <local:CreateShoppingListViewModel/>
     </ContentPage.BindingContext>
     
-    <!-- Title of this (SHELL) View -->
+    <!-- Title of this (SHELL) view -->
     <Shell.TitleView>
         <FlexLayout Padding="5" JustifyContent="Center">
             <Label
