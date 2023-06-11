@@ -23,7 +23,6 @@ namespace ShoppingTracker.UserControls
         
         // Property exposed by the control - to use in XAML file
         public ObservableCollection<ShoppingItem> ShoppingItemsDataSource { get; set; }
-        //public ObservableCollection<ShoppingItem> ShoppingItemsDataSource { get; set; }
 
 
         // Create bindable property that is tracked by the Xamarin.Forms property system
