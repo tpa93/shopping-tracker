@@ -20,5 +20,11 @@ namespace ShoppingTracker.Model
             this.ShoppingItems = Items;
         }
 
+        public ShoppingItemList(ObservableCollection<ShoppingItem> Items, string name)
+        {
+            this.ShoppingItems = Items;
+            this.Name = name;
+        }
+
     }
 }

@@ -40,5 +40,21 @@ namespace ShoppingTracker.UserControls
             control.ItemList.ItemsSource = (ObservableCollection<ShoppingItem>)newValue;
         }
 
+        /*
+          public ImageButton DeleteShoppingItemButton { get; set; }
+          public Command DeleteShoppingItemCommand { get; set; }
+
+          private void createImageButton()
+          {
+              DeleteShoppingItemButton = new ImageButton
+              {
+                  Source = "delete_shopping_item.png",
+                  BackgroundColor = Color.Transparent,
+                  Scale = 0.5,
+                  Command = DeleteShoppingItemCommand
+              };
+
+          }
+      */
     }
 }

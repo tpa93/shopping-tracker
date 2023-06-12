@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using PCLStorage;
 using ShoppingTracker.Services;
+using Newtonsoft.Json;
 
 namespace ShoppingTracker.ViewModel
 {
-    internal class CreateShoppingListViewModel : INotifyPropertyChanged
+    internal class CreateShoppingListViewModel: INotifyPropertyChanged
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; }
 
@@ -24,9 +25,11 @@ namespace ShoppingTracker.ViewModel
             
             ShoppingItems = new ObservableCollection<ShoppingItem>();
 
+            
             ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
             ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
             ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
+            
 
         }
 
@@ -66,6 +69,8 @@ namespace ShoppingTracker.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
 
         // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
@@ -107,7 +112,6 @@ namespace ShoppingTracker.ViewModel
 
 
 
-
         // Process ShoppingItems according to choosed option on ActionSheet
         public ICommand ProcessShoppingItemsCommand => new Command(ProcessShoppingItems);
 
@@ -124,51 +128,47 @@ namespace ShoppingTracker.ViewModel
 
             if (action != "Cancel")
             {
-                ShoppingItemList shoppingItemList = new ShoppingItemList(ShoppingItems);
+                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ShoppingItems);
 
                 // Proceed with non-saved template to work with
                 if (action == "Go shopping")
                 {
-                    // Transfer current data state of ObservableCollection to "ShoppingView"
-
+                    // Transfer current data state of ObservableCollection to "ShoppingView" and navigate to ShoppingView
+                    //App.ActiveShoppingItemList = new ShoppingItemList(new ObservableCollection<ShoppingItem>(shoppingItemListTemplate.ShoppingItems), shoppingItemListTemplate.Name);
+                    //await Shell.Current.GoToAsync("//goShoppingView");
+                    PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                 }
 
                 else
                 {
                     // Prompt user for template name
-                    shoppingItemList.Name = await PromptUserForTemplateName();
+                    shoppingItemListTemplate.Name = await PromptUserForTemplateName();
 
                     // Save list as template
-                    if (action == "Save as template" && shoppingItemList.Name != null)
+                    if (action == "Save as template" && shoppingItemListTemplate.Name != null)
                     {
 
                         // Save template and check for success
-                        bool check = await FileHandler.SaveSILTemplateOnDevice(shoppingItemList);
-                        if (!check)
-                        {
-                            await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Cancel");
-                        }
-                        else
-                        {
-                            await Application.Current.MainPage.DisplayAlert("Template saved", null, "Ok");
-                        }
+                        await SaveSILTemplate(shoppingItemListTemplate);
                         return;
                     }
 
-                    else if (action == "Save as template & go shopping" && shoppingItemList.Name != null)
+                    else if (action == "Save as template & go shopping" && shoppingItemListTemplate.Name != null)
                     {
-                        // Save current data state of ObservableCollection as JSON on local device
+                        // Save template and check for success
+                        if(!await SaveSILTemplate(shoppingItemListTemplate))
+                        {
+                            return;
+                        }
 
                         // Transfer current data state of ObservableCollection to "ShoppingView"
-
+                        //App.ActiveShoppingItemList = shoppingItemListTemplate;
+                        await Shell.Current.GoToAsync("//goShoppingView");
                     }
                 }
             }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Operation aborted!", null, "Ok");
-            }
         }
+
 
         async Task<string> PromptUserForTemplateName()
         {
@@ -176,7 +176,7 @@ namespace ShoppingTracker.ViewModel
             string templateName = string.Empty;
 
             // Get all saved template names
-            List<string> blockedTemplateNames = await FileHandler.GetAllSILTemplateNames();
+            List<string> blockedTemplateNames = await TemplateHandler.GetAllSILTemplateNames();
 
             // Validate user input
             while (templateName == string.Empty)
@@ -187,12 +187,39 @@ namespace ShoppingTracker.ViewModel
                 {
                     await Application.Current.MainPage.DisplayAlert("Please define a name", null, "Ok");
                 }
-                if (blockedTemplateNames.Contains(templateName))
+                else if (blockedTemplateNames.Contains(templateName))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Template name already existing", null, "Ok");
+                    string action = await Application.Current.MainPage.DisplayActionSheet("Template name already existing. Do you want to overwrite?", "Cancel", null, "Ok");
+                    if (action == "Ok")
+                    {
+                        return templateName;
+                    }
                 }
             }
             return templateName;
+        }
+
+
+        // Validate saving template and respond to user
+        async Task<bool> SaveSILTemplate(ShoppingItemList shoppingItemList)
+        {
+ 
+            if (!await TemplateHandler.SaveSILTemplateOnDevice(shoppingItemList))
+            {
+                await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Cancel");
+                return false;
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Template saved", null, "Ok");
+                return true;
+            }
+        }
+
+        async void PassDataAndFollowRoute(string route, ShoppingItemList activeShoppingItemList)
+        {
+            string json = JsonConvert.SerializeObject(activeShoppingItemList);
+            await Shell.Current.GoToAsync($"{route}?JSON={json}");
         }
     }
 }

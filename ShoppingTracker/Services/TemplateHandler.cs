@@ -9,21 +9,29 @@ using ShoppingTracker.Model;
 namespace ShoppingTracker.Services
 {
     // ShoppingItemListTemplateHandler
-    public static class FileHandler
+    public static class TemplateHandler
     {
         // Save ShoppingItemListTemplate in templates folder on local device
         public async static Task<bool> SaveSILTemplateOnDevice(ShoppingItemList shoppingItemList)
         {
             // Create file
-            IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
-            string templateFile = shoppingItemList.Name + ".txt";
-            IFile file = await folder.CreateFileAsync(templateFile, CreationCollisionOption.FailIfExists);
+            try
+            {
+                IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
+                string templateFile = shoppingItemList.Name + ".txt";
+                IFile file = await folder.CreateFileAsync(templateFile, CreationCollisionOption.FailIfExists);
 
-            // Convert object to JSON-string and write file
-            string json = JsonConvert.SerializeObject(shoppingItemList);
-            await file.WriteAllTextAsync(json);
+                // Convert object to JSON-string and write file
+                string json = JsonConvert.SerializeObject(shoppingItemList);
+                await file.WriteAllTextAsync(json);
+                
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                return false;
+            }
             
-            return true;
 
         }
 

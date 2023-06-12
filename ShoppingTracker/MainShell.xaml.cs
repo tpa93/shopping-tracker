@@ -10,6 +10,7 @@ namespace ShoppingTracker
         public MainShell()
         {
             InitializeComponent();
+
         }
     }
 }

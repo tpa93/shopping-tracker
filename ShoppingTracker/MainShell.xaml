@@ -10,7 +10,7 @@
             <ShellContent ContentTemplate="{DataTemplate pages:View.CreateShoppingListView}"/>
         </Tab>
         <Tab Title="Go Shopping">
-            <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}"/>
+            <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}" Route="goShoppingView"/>
         </Tab>
         <Tab Title="Archive">
             <ShellContent Title="Recent Shopping " ContentTemplate="{DataTemplate pages:View.ArchiveView}"/>
