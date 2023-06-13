@@ -18,19 +18,25 @@ namespace ShoppingTracker.ViewModel
 {
     internal class CreateShoppingListViewModel: INotifyPropertyChanged
     {
-        public ObservableCollection<ShoppingItem> ShoppingItems { get; set; }
+
+        ShoppingItemList activeShoppingItemList = new ShoppingItemList();
+        public ShoppingItemList ActiveShoppingItemList 
+        { 
+            get
+            {
+                return activeShoppingItemList;
+            }
+            
+            set
+            {
+                activeShoppingItemList = value;
+                OnPropertyChanged();
+            }
+        }
 
         public CreateShoppingListViewModel()
         {
-            
-            ShoppingItems = new ObservableCollection<ShoppingItem>();
-
-            
-            ShoppingItems.Add(new ShoppingItem("Test 1", "1"));
-            ShoppingItems.Add(new ShoppingItem("Test 2", "2"));
-            ShoppingItems.Add(new ShoppingItem("Test 3", "3"));
-            
-
+            ActiveShoppingItemList = new ShoppingItemList();
         }
 
 
@@ -85,7 +91,7 @@ namespace ShoppingTracker.ViewModel
             if (NewItemName != "" && NewItemName != null)
             {
                 // Use temp item, because the values of NewShoppingItem will be overwritten, when clearing properties in the step afterwards
-                ShoppingItems.Add(new ShoppingItem(NewItemName, NewItemCount));
+                ActiveShoppingItemList.ShoppingItems.Add(new ShoppingItem(NewItemName, NewItemCount));
 
             }
 
@@ -105,7 +111,7 @@ namespace ShoppingTracker.ViewModel
         void RemoveShoppingItem(object o)
         {
             ShoppingItem itemToRemove = o as ShoppingItem;
-            ShoppingItems.Remove(itemToRemove);
+            ActiveShoppingItemList.ShoppingItems.Remove(itemToRemove);
         }
 
 
@@ -130,7 +136,7 @@ namespace ShoppingTracker.ViewModel
 
             if (action != "Cancel")
             {
-                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ShoppingItems);
+                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ActiveShoppingItemList.ShoppingItems);
 
                 // Proceed with non-saved template to work with
                 if (action == "Go shopping")
@@ -152,7 +158,7 @@ namespace ShoppingTracker.ViewModel
                     }
 
                     ShoppingItemList loadedTemplate = await TemplateHandler.GetSILTemplateFromDevice(templateName);
-                    ShoppingItems = loadedTemplate.ShoppingItems;
+                    ActiveShoppingItemList = loadedTemplate;
 
                 }
                 else

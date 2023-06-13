@@ -40,7 +40,7 @@
     <AbsoluteLayout>
         
         <!-- Main data view -->
-        <control:ShoppingListScrollView ShoppingItemsDataSource ="{Binding ShoppingItems}"/>
+        <control:ShoppingListScrollView ShoppingItemsDataSource ="{Binding ActiveShoppingItemList.ShoppingItems}"/>
 
         <!-- Adding control for user input -->
         <Grid x:Name="GridAddItem" 
