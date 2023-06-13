@@ -25,7 +25,7 @@
                 <!-- Binding ShoppingItems object to the ListView -->
                 <ListView x:Name="ItemList"
                           SelectionMode="None"
-                          ItemsSource="{Binding ShoppingItems}">
+                          ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}">
                     <!-- Create template entry for a shopping item-->
                     <ListView.ItemTemplate >
                         <DataTemplate >

@@ -19,33 +19,10 @@ namespace ShoppingTracker.View
     //[QueryProperty(nameof(JSON), "JSON")]
     public partial class ShoppingView : ContentPage
     {
-        /*
-        ShoppingItemList ActiveShoppingItemList { get; set; }
-
-        string json;
-        public string JSON
-        {
-            get
-            {
-                return json;
-            }
-            set
-            {
-                json = value;
-                json = Uri.UnescapeDataString(value ?? String.Empty);
-                ActiveShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
-            }
-        }
-        */
         public ShoppingView()
         {
             InitializeComponent();
 
-
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
 
         }
     }

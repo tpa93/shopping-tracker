@@ -20,9 +20,9 @@ namespace ShoppingTracker.Model
             this.ShoppingItems = Items;
         }
 
-        public ShoppingItemList(ObservableCollection<ShoppingItem> Items, string name)
+        public ShoppingItemList(ObservableCollection<ShoppingItem> shoppingItems, string name)
         {
-            this.ShoppingItems = Items;
+            this.ShoppingItems = shoppingItems;
             this.Name = name;
         }
 

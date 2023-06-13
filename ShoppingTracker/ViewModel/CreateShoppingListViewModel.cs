@@ -117,14 +117,16 @@ namespace ShoppingTracker.ViewModel
 
         async void ProcessShoppingItems()
         {
+            /*
             if (ShoppingItems.Count == 0)
             {
                 await Application.Current.MainPage.DisplayAlert("No shopping items in template to proceed", null, "Ok");
                 return;
             }
+            */
 
             // Prompt user how to proceed with template
-            string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping");
+            string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping", "Load template");
 
             if (action != "Cancel")
             {
@@ -138,11 +140,30 @@ namespace ShoppingTracker.ViewModel
                     //await Shell.Current.GoToAsync("//goShoppingView");
                     PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                 }
+                else if (action == "Load template")
+                {
+                    List<string> userTemplateNames = await TemplateHandler.GetAllSILTemplateNames();
 
+                    string templateName= await Application.Current.MainPage.DisplayActionSheet("Choose template to edit:", "Cancel", null, userTemplateNames.ToArray());
+
+                    if (templateName == "Cancel" || templateName == null)
+                    {
+                        return;
+                    }
+
+                    ShoppingItemList loadedTemplate = await TemplateHandler.GetSILTemplateFromDevice(templateName);
+                    ShoppingItems = loadedTemplate.ShoppingItems;
+
+                }
                 else
                 {
                     // Prompt user for template name
                     shoppingItemListTemplate.Name = await PromptUserForTemplateName();
+
+                    if (shoppingItemListTemplate.Name == null)
+                    {
+                        return;
+                    }
 
                     // Save list as template
                     if (action == "Save as template" && shoppingItemListTemplate.Name != null)
@@ -163,7 +184,7 @@ namespace ShoppingTracker.ViewModel
 
                         // Transfer current data state of ObservableCollection to "ShoppingView"
                         //App.ActiveShoppingItemList = shoppingItemListTemplate;
-                        await Shell.Current.GoToAsync("//goShoppingView");
+                        PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                     }
                 }
             }
@@ -177,20 +198,35 @@ namespace ShoppingTracker.ViewModel
 
             // Get all saved template names
             List<string> blockedTemplateNames = await TemplateHandler.GetAllSILTemplateNames();
+            if (blockedTemplateNames == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Ok");
+                return null;
+            }
 
             // Validate user input
             while (templateName == string.Empty)
             {
+
                 templateName = await Application.Current.MainPage.DisplayPromptAsync("Define template name", "Name:");
 
-                if(templateName == string.Empty)
+                // When prompt was canceled
+                if (templateName == null)
+                {
+                    return null;
+                }
+
+                // When user enters empty string
+                else if (templateName == string.Empty)
                 {
                     await Application.Current.MainPage.DisplayAlert("Please define a name", null, "Ok");
                 }
+
+                // When template name already existing
                 else if (blockedTemplateNames.Contains(templateName))
                 {
-                    string action = await Application.Current.MainPage.DisplayActionSheet("Template name already existing. Do you want to overwrite?", "Cancel", null, "Ok");
-                    if (action == "Ok")
+                    bool action = await Application.Current.MainPage.DisplayAlert("Template name already existing. Do you want to overwrite?", null, "Ok", "Cancel");
+                    if (action == true)
                     {
                         return templateName;
                     }
@@ -216,6 +252,8 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
+
+        // Pass ShoppingItemsList to follow-up viewModel
         async void PassDataAndFollowRoute(string route, ShoppingItemList activeShoppingItemList)
         {
             string json = JsonConvert.SerializeObject(activeShoppingItemList);
