@@ -136,7 +136,7 @@ namespace ShoppingTracker.ViewModel
                 }
                 else if (action == "Load template")
                 {
-                    List<string> userTemplateNames = await TemplateHandler.GetAllSILTemplateNames();
+                    List<string> userTemplateNames = await SILFileHandler.GetAllSILTemplateNames();
 
                     string templateName= await Application.Current.MainPage.DisplayActionSheet("Choose template to edit:", "Cancel", null, userTemplateNames.ToArray());
 
@@ -145,7 +145,7 @@ namespace ShoppingTracker.ViewModel
                         return;
                     }
 
-                    ShoppingItemList loadedTemplate = await TemplateHandler.GetSILTemplateFromDevice(templateName);
+                    ShoppingItemList loadedTemplate = await SILFileHandler.GetSILTemplateFromDevice(templateName);
                     ActiveShoppingItemList = loadedTemplate;
 
                 }
@@ -191,7 +191,7 @@ namespace ShoppingTracker.ViewModel
             string templateName = string.Empty;
 
             // Get all saved template names
-            List<string> blockedTemplateNames = await TemplateHandler.GetAllSILTemplateNames();
+            List<string> blockedTemplateNames = await SILFileHandler.GetAllSILTemplateNames();
             if (blockedTemplateNames == null)
             {
                 await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Ok");
@@ -234,7 +234,7 @@ namespace ShoppingTracker.ViewModel
         async Task<bool> SaveSILTemplate(ShoppingItemList shoppingItemList)
         {
  
-            if (!await TemplateHandler.SaveSILTemplateOnDevice(shoppingItemList))
+            if (!await SILFileHandler.SaveSILTemplateOnDevice(shoppingItemList))
             {
                 await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Cancel");
                 return false;

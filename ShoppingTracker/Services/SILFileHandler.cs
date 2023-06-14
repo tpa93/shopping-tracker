@@ -9,7 +9,7 @@ using ShoppingTracker.Model;
 namespace ShoppingTracker.Services
 {
     // ShoppingItemListTemplateHandler
-    public static class TemplateHandler
+    public static class SILFileHandler
     {
         // Save ShoppingItemListTemplate in templates folder on local device
         public async static Task<bool> SaveSILTemplateOnDevice(ShoppingItemList shoppingItemList)
