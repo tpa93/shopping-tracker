@@ -61,6 +61,23 @@ namespace ShoppingTracker.Services
             
         }
 
+        // Delete ShoppinItemListTemplate from templates folder on local device
+        public async static Task<bool> DeleteSILTemplateFromDevice(string templateName)
+        {
+            try
+            {
+                IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
+                string fileName = templateName + ".txt";
+                IFile file = await folder.GetFileAsync(fileName);
+                await file.DeleteAsync();
+                return true;
+            }
+            catch(Exception ex) 
+            {
+                return false;
+            } 
+        }
+
         // Get all template names from templates folder on local device
         public async static Task<List<string>> GetAllSILTemplateNames()
         {

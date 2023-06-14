@@ -9,12 +9,19 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.ObjectModel;
+using System.Runtime.InteropServices.ComTypes;
+using System.Linq;
+using Xamarin.CommunityToolkit.UI.Views;
+using Xamarin.Essentials;
+using System.ComponentModel.Design;
 
 namespace ShoppingTracker.ViewModel
 {
 
     [QueryProperty(nameof(JSON), "JSON")]
-    internal class ShoppingViewModel:INotifyPropertyChanged
+    internal class ShoppingViewModel : INotifyPropertyChanged
     {
         public ShoppingViewModel()
         {
@@ -36,7 +43,7 @@ namespace ShoppingTracker.ViewModel
                 json = Uri.UnescapeDataString(value ?? String.Empty);
 
                 // Trigger setter of ActiveShoppingItemList to update view
-                ActiveShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);    
+                ActiveShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
             }
         }
 
@@ -57,11 +64,102 @@ namespace ShoppingTracker.ViewModel
 
         }
 
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        // EventToCommandBehavior for TappedItem Event - update tapped ShoppingItem as Checked/Not Checked
+        // Property is bound to Image in ShoppingView.xaml
+        public ICommand TappedShoppingItemCommand => new Command<ShoppingItem>(SelectedShoppingItem);
+        void SelectedShoppingItem(ShoppingItem selectedItem)
+        {
+            if (selectedItem.Checked == false)
+            {
+                ActiveShoppingItemList.ShoppingItems[ActiveShoppingItemList.ShoppingItems.IndexOf(selectedItem)].Checked = true;
+            }
+            else
+            {
+                ActiveShoppingItemList.ShoppingItems[ActiveShoppingItemList.ShoppingItems.IndexOf(selectedItem)].Checked = false;
+            }
+
+        }
+
+        public ICommand FinishShoppingCommand => new Command(FinishShopping);
+        async void FinishShopping()
+        {
+            string action = string.Empty;
+            string totalCost = string.Empty;
+            string location = string.Empty;
+
+            while (action != "Cancel" && action != "Finish shopping")
+            {
+                action = await Application.Current.MainPage.DisplayActionSheet("Add extra information to shopping list", "Cancel",null, "Add total cost", "Add location", "Finish shopping");
+
+                // Prompt user for total shopping cost
+                if (action == "Add total cost")
+                {
+                    totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: totalCost);
+                    ActiveShoppingItemList.TotalCost = totalCost;
+                }
+
+                /*
+                // Prompt user for taking or selecting a photo from bill
+                else if (action == "Add photo of bill")
+                {
+                    // Because it is currently not possible to use the Mediapicker on Android 13.0 API 33 according to created GITHUB issue
+                    // https://github.com/xamarin/Essentials/issues/2041
+
+                }
+                */
+
+                // Prompt user for adding location
+                else if (action == "Add location")
+                {
+                    location = await Application.Current.MainPage.DisplayPromptAsync("Location", "Enter shopping location:", initialValue: location);
+                    ActiveShoppingItemList.Location = location;
+
+                }
+                // Save ActiveShoppingItemList with eventually added costs
+                else if (action == "Finish shopping")
+                {
+                    // Check for unchecked items and propmt user to react if he wants to continue to finish shopping, when there are unchecked items
+                    foreach (var item in ActiveShoppingItemList.ShoppingItems)
+                    {
+                        if (item.Checked == false)
+                        {
+                            if (!await Application.Current.MainPage.DisplayAlert("List not complete", "Not every item on the list is checked off. Do you want to continue?", "Yes", "Cancel"))
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                break;
+                            }
+
+                        }
+                    }
+
+                    // Ask user if the current date and time should be set as shopping date or prompt to add another
+                    if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
+                    {
+                        DateTime dateValue;
+                        string shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date:", null);
+                        while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate != null)
+                        {
+                            shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date", "Please enter a valid date:");
+                        }
+                        activeShoppingItemList.ShoppingDate = dateValue;
+                    }
+                    else
+                    {
+                        ActiveShoppingItemList.ShoppingDate = DateTime.Now;
+                    }
+
+                }
+            }
+        }
     }
 }

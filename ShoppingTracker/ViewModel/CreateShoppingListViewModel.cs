@@ -115,21 +115,11 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-
-
-
         // Process ShoppingItems according to choosed option on ActionSheet
         public ICommand ProcessShoppingItemsCommand => new Command(ProcessShoppingItems);
 
         async void ProcessShoppingItems()
         {
-            /*
-            if (ShoppingItems.Count == 0)
-            {
-                await Application.Current.MainPage.DisplayAlert("No shopping items in template to proceed", null, "Ok");
-                return;
-            }
-            */
 
             // Prompt user how to proceed with template
             string action = await Application.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Go shopping", "Save as template", "Save as template & go shopping", "Load template");
@@ -142,8 +132,6 @@ namespace ShoppingTracker.ViewModel
                 if (action == "Go shopping")
                 {
                     // Transfer current data state of ObservableCollection to "ShoppingView" and navigate to ShoppingView
-                    //App.ActiveShoppingItemList = new ShoppingItemList(new ObservableCollection<ShoppingItem>(shoppingItemListTemplate.ShoppingItems), shoppingItemListTemplate.Name);
-                    //await Shell.Current.GoToAsync("//goShoppingView");
                     PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                 }
                 else if (action == "Load template")
@@ -161,6 +149,7 @@ namespace ShoppingTracker.ViewModel
                     ActiveShoppingItemList = loadedTemplate;
 
                 }
+              
                 else
                 {
                     // Prompt user for template name
@@ -195,7 +184,6 @@ namespace ShoppingTracker.ViewModel
                 }
             }
         }
-
 
         async Task<string> PromptUserForTemplateName()
         {

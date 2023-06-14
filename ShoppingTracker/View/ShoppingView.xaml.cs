@@ -7,16 +7,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ShoppingTracker.ViewModel;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 
-    //[QueryProperty(nameof(JSON), "JSON")]
     public partial class ShoppingView : ContentPage
     {
         public ShoppingView()
@@ -25,5 +25,6 @@ namespace ShoppingTracker.View
 
 
         }
+
     }
 }

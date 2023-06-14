@@ -9,6 +9,11 @@ namespace ShoppingTracker.Model
     {
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; } = new ObservableCollection<ShoppingItem>();
         public string Name { get; set; }
+        public string TotalCost { get; set; }
+
+        public DateTime ShoppingDate { get; set; }
+
+        public string Location { get; set; }
 
         public ShoppingItemList() 
         { 

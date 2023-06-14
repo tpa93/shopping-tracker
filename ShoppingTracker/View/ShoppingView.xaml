@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
              xmlns:control="clr-namespace:ShoppingTracker.UserControls"
              xmlns:local="clr-namespace:ShoppingTracker.ViewModel"
              x:Class="ShoppingTracker.View.ShoppingView">
@@ -9,6 +10,12 @@
     <ContentPage.BindingContext>
         <local:ShoppingViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <Shell.TitleView>
         <Label Text="Shopping" 
@@ -24,11 +31,15 @@
             <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
                 <!-- Binding ShoppingItems object to the ListView -->
                 <ListView x:Name="ItemList"
-                          SelectionMode="None"
-                          ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}">
+                          ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}"
+                          SelectionMode="None">
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding TappedShoppingItemCommand}" EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}">
+                        </behaviors:EventToCommandBehavior>
+                    </ListView.Behaviors>
                     <!-- Create template entry for a shopping item-->
-                    <ListView.ItemTemplate >
-                        <DataTemplate >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <ViewCell>
                                 <Grid Padding="5,0,5,0">
                                     <Grid.RowDefinitions>
@@ -37,8 +48,7 @@
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="6*"/>
-                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="7*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
 
@@ -61,33 +71,29 @@
                                     <Image
                                     Grid.Column="2"
                                     Source="green_check_mark.png"
-                                    IsVisible="false"
+                                    IsVisible="{Binding Checked, Mode=TwoWay}"
                                     Scale="0.5"
                                     BackgroundColor="Transparent"
                                     />
-
-
-                                    <!-- Create image button to delete ShoppingItem-->
-                                    <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
-                                    <!-- The is the RemoveShoppingItemCommand method implemented -->
-                                    <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                    <!-- CommandParameter sets the parameter passed into the method bound to the command -->
-                                    <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
-                                    <ImageButton
-                                            Grid.Column="3"
-                                            Source="delete_shopping_item.png"
-                                            BackgroundColor="Transparent"
-                                            Scale="0.5"
-                                            Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
-                                            CommandParameter="{Binding .}"
-                                            />
-
+                             
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
+                     AbsoluteLayout.LayoutBounds="0.95,1"
+                     >
+                <ImageButton x:Name="FinishShopping"
+                    Source="finish_shopping_new.png"
+                    BackgroundColor="Transparent"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    Command="{Binding FinishShoppingCommand}"
+                    />
+            </StackLayout>
+
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShoppingTracker": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

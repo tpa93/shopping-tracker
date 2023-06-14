@@ -79,8 +79,8 @@
         <!-- So that the buttons position is positioned absolut depending from the display -->
         <!-- 0,0 = upper left corner & 1,1 downer right corner-->
         <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
-                     AbsoluteLayout.LayoutBounds="0.95,1"
-                     >
+                     AbsoluteLayout.LayoutBounds="0.95,1">
+            
             <Button x:Name="ProcessList"
                     Text="&#x1F4BE;"
                     BackgroundColor="#2196F3"
@@ -99,6 +99,8 @@
                     WidthRequest="60"
                     Command="{Binding AddShoppingItemCommand}"
                     />
+           
+            
         </StackLayout>
         
     </AbsoluteLayout>
