@@ -18,11 +18,13 @@
     </ContentPage.Resources>
     
     <Shell.TitleView>
-        <Label Text="Shopping" 
-               FontSize="24" 
-               TextColor="White"
-               HorizontalTextAlignment="Center" 
-               VerticalTextAlignment="Center"/>
+        <FlexLayout Padding="5" JustifyContent="Center">
+
+            <Image
+                Source="sv_header.png"
+                />
+
+        </FlexLayout>
     </Shell.TitleView>
 
     <ContentPage.Content>
@@ -85,13 +87,15 @@
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
                      AbsoluteLayout.LayoutBounds="0.95,1"
                      >
-                <ImageButton x:Name="FinishShopping"
-                    Source="finish_shopping_new.png"
-                    BackgroundColor="Transparent"
+                <Button x:Name="FinishShopping" 
+                    Text="&#x1F3C1;"
+                    FontSize="24"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="40"
                     HeightRequest="60"
                     WidthRequest="60"
-                    Command="{Binding FinishShoppingCommand}"
-                    />
+                    Command="{Binding FinishShoppingCommand}"/>
             </StackLayout>
 
         </AbsoluteLayout>

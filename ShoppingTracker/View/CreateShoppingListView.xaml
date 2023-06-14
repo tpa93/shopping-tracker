@@ -18,14 +18,11 @@
                 TextColor="White"
                 VerticalTextAlignment="Center"
                 Margin="5,0,5,0"/>
-            
-            <Image
-                Source="csl_header_1.png"
-                Margin="5,0,5,0"/>
+
             <Image
                 Source="csl_header_2.png"
                 Margin="5,0,5,0"/>
-                
+
             <Label
                 Text="Template"
                 FontSize="18"
@@ -83,6 +80,7 @@
             
             <Button x:Name="ProcessList"
                     Text="&#x1F4BE;"
+                    FontSize="24"
                     BackgroundColor="#2196F3"
                     CornerRadius="40"
                     HeightRequest="60"
@@ -92,6 +90,7 @@
 
             <Button x:Name="AddItem" 
                     Text="+"
+                    FontSize="24"
                     BackgroundColor="#2196F3"
                     TextColor="White"
                     CornerRadius="40"
