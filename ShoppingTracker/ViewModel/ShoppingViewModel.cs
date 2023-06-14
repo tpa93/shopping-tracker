@@ -96,7 +96,7 @@ namespace ShoppingTracker.ViewModel
 
             while (action != "Cancel" && action != "Finish shopping")
             {
-                action = await Application.Current.MainPage.DisplayActionSheet("Add extra information to shopping list", "Cancel",null, "Add total cost", "Add location", "Finish shopping");
+                action = await Application.Current.MainPage.DisplayActionSheet("Add extra information to shopping list", "Cancel", null, "Add total cost", "Add location", "Finish shopping");
 
                 // Prompt user for total shopping cost
                 if (action == "Add total cost")
@@ -125,40 +125,56 @@ namespace ShoppingTracker.ViewModel
                 // Save ActiveShoppingItemList with eventually added costs
                 else if (action == "Finish shopping")
                 {
-                    // Check for unchecked items and propmt user to react if he wants to continue to finish shopping, when there are unchecked items
-                    foreach (var item in ActiveShoppingItemList.ShoppingItems)
+                    if(!await IgnoreMissingItems())
                     {
-                        if (item.Checked == false)
-                        {
-                            if (!await Application.Current.MainPage.DisplayAlert("List not complete", "Not every item on the list is checked off. Do you want to continue?", "Yes", "Cancel"))
-                            {
-                                return;
-                            }
-                            else
-                            {
-                                break;
-                            }
-
-                        }
+                        return;
                     }
 
-                    // Ask user if the current date and time should be set as shopping date or prompt to add another
-                    if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
+                    AddShoppingDateToActiveShoppingList();
+                }
+            }
+        }
+
+        // Check ActiveShoppingList for unchecked items and prompt user how to handle
+        async Task<bool> IgnoreMissingItems()
+        {
+            // Check for unchecked items and propmt user to react if he wants to continue to finish shopping, when there are unchecked items
+            foreach (var item in ActiveShoppingItemList.ShoppingItems)
+            {
+                if (item.Checked == false)
+                {
+                    if (!await Application.Current.MainPage.DisplayAlert("List not complete", "Not every item on the list is checked off. Do you want to continue?", "Yes", "Cancel"))
                     {
-                        DateTime dateValue;
-                        string shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date:", null);
-                        while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate != null)
-                        {
-                            shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date", "Please enter a valid date:");
-                        }
-                        activeShoppingItemList.ShoppingDate = dateValue;
+                        return false;
                     }
                     else
                     {
-                        ActiveShoppingItemList.ShoppingDate = DateTime.Now;
+                        return true;
                     }
 
                 }
+            }
+
+            return true;
+        }
+
+        // Prompt user how to handle shopping date
+        async void AddShoppingDateToActiveShoppingList()
+        {
+            if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
+            {
+                DateTime dateValue;
+                string shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date:", null);
+
+                while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate != null)
+                {
+                    shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date", "Please enter a valid date:");
+                }
+                activeShoppingItemList.ShoppingDate = dateValue;
+            }
+            else
+            {
+                ActiveShoppingItemList.ShoppingDate = DateTime.Now;
             }
         }
     }
