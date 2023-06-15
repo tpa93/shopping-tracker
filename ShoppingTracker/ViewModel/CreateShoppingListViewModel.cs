@@ -126,7 +126,7 @@ namespace ShoppingTracker.ViewModel
 
             if (action != "Cancel")
             {
-                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ActiveShoppingItemList.ShoppingItems);
+                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ActiveShoppingItemList);
 
                 // Proceed with non-saved template to work with
                 if (action == "Go shopping")

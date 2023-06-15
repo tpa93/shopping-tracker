@@ -1,14 +1,21 @@
-﻿using System;
+﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ShoppingTracker.Model
-{   
+{
+    [Table ("shopping_items")]
     public class ShoppingItem: INotifyPropertyChanged
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Count { get; set; }
 
         bool _checked;
@@ -21,6 +28,9 @@ namespace ShoppingTracker.Model
                 OnPropertyChanged();
             }
         }
+
+        [ForeignKey(typeof(ShoppingItemList))]
+        public int ShoppingItemListId { get; set; }
 
         public ShoppingItem(string name, string count) 
         { 

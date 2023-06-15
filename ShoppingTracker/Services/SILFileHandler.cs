@@ -19,6 +19,7 @@ namespace ShoppingTracker.Services
             {   
                 // Create file
                 IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
+                string test = folder.Path;
                 string templateFile = shoppingItemList.Name + ".txt";
                 IFile file = await folder.CreateFileAsync(templateFile, CreationCollisionOption.ReplaceExisting);
 

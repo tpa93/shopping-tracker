@@ -16,6 +16,7 @@ using System.Linq;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Essentials;
 using System.ComponentModel.Design;
+using ShoppingTracker.Services;
 
 namespace ShoppingTracker.ViewModel
 {
@@ -130,7 +131,20 @@ namespace ShoppingTracker.ViewModel
                         return;
                     }
 
-                    AddShoppingDateToActiveShoppingList();
+                    await AddShoppingDateToActiveShoppingList();
+
+                    if(! DatabaseHandler.InsertShoppingItemList(ActiveShoppingItemList)) 
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Shopping list could not be saved to history", "Ok");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Saved", "Shopping list with all information added was saved to history", "Ok");
+                    }
+
+                    DatabaseHandler.GetTotalShoppingHistory();
+
+                    return;
                 }
             }
         }
@@ -159,7 +173,7 @@ namespace ShoppingTracker.ViewModel
         }
 
         // Prompt user how to handle shopping date
-        async void AddShoppingDateToActiveShoppingList()
+        async Task AddShoppingDateToActiveShoppingList()
         {
             if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
             {
