@@ -141,7 +141,6 @@ namespace ShoppingTracker.ViewModel
                     {
                         await Application.Current.MainPage.DisplayAlert("Saved", "Shopping list with all information added was saved to history", "Ok");
                     }
-
                     return;
                 }
             }

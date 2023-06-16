@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ShoppingTracker.Model;
 using ShoppingTracker.Services;
+using ShoppingTracker.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,7 @@ namespace ShoppingTracker.ViewModel
         void InitializeShoppingHistory()
         {
             ShoppingHistory = DatabaseHandler.GetTotalShoppingHistory();
+
             if (ShoppingHistory == null) 
             { 
               Application.Current.MainPage.DisplayAlert("Error", "Loading shopping history failed due to unknown error", "OK");
@@ -37,7 +39,7 @@ namespace ShoppingTracker.ViewModel
 
         async void GetHistoryDetails(ShoppingItemList selectedList)
         {
-
+            await Application.Current.MainPage.Navigation.PushAsync(new HistoryDetailView(selectedList));
         }
     }
 }
