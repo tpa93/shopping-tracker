@@ -17,6 +17,7 @@ namespace ShoppingTracker.Services
 
         static DatabaseHandler()
         {
+            // Establish database connection
             string folder = PCLStorage.FileSystem.Current.LocalStorage.Path;
             string dbName = "shopping_tracker_db_data";
             db = new SQLiteConnection(Path.Combine(folder + dbName));
@@ -33,9 +34,20 @@ namespace ShoppingTracker.Services
         }
 
         // Get whole shopping history from database
-        public static List<ShoppingItemList> GetTotalShoppingHistory()
+        public static ObservableCollection<ShoppingItemList> GetTotalShoppingHistory()
         {
-            return db.GetAllWithChildren<ShoppingItemList>();
+            try
+            {
+                return new ObservableCollection<ShoppingItemList>(db.GetAllWithChildren<ShoppingItemList>());
+            }
+
+            catch (Exception ex) 
+            {
+                return null;
+            }
+               
+
+           
 
         }
 

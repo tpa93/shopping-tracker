@@ -4,11 +4,11 @@
              x:Class="ShoppingTracker.View.StatisticsView">
 
     <Shell.TitleView>
-        <Label Text="Shopping Statistics" 
-               FontSize="24" 
-               TextColor="White"
-               HorizontalTextAlignment="Center" 
-               VerticalTextAlignment="Center"/>
+        <FlexLayout Padding="5" JustifyContent="Center">
+            <Image
+                Source="statistics_2.png"
+                />
+        </FlexLayout>
     </Shell.TitleView>
     
     <ContentPage.Content>

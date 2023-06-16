@@ -6,7 +6,7 @@
     <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
         <!-- Binding ShoppingItems object to the ListView -->
         <ListView x:Name="ItemList"
-                              SelectionMode="None">
+                  SelectionMode="None">
             <!-- Create template entry for a shopping item-->
             <ListView.ItemTemplate >
                 <DataTemplate >

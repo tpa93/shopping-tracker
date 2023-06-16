@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingTracker.ViewModel"
+             x:Class="ShoppingTracker.View.HistoryView">
+
+
+    <ContentPage.BindingContext>
+        <local:HistoryViewModel />
+    </ContentPage.BindingContext>
+
+    <Shell.TitleView>
+        <FlexLayout JustifyContent="Center"
+                    Padding="5">
+            <Image Source="archive.png" />
+        </FlexLayout>
+
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+
+        <ScrollView Margin="0,5,0,0">
+            <ListView x:Name="HistoryList"
+                      ItemsSource="{Binding ShoppingHistory}"
+                      SelectionMode="None">
+                <ListView.Header>
+                    <Grid>
+                        <!-- Create Header structure -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!-- Fill Header data -->
+                        <Rectangle Grid.ColumnSpan="4"
+                                   BackgroundColor="#2196F3" />
+                        <Label Text="Date"
+                               Grid.Column="0"
+                               Padding="5,0,0,0"
+                               TextColor="Black"
+                               FontAttributes="Bold" />
+                        <Label Text="Location"
+                               Grid.Column="1"
+                               TextColor="Black"
+                               FontAttributes="Bold" />
+                        <Label Text="Total"
+                               Grid.Column="2"
+                               TextColor="Black"
+                               FontAttributes="Bold" />
+                        <Label Text="Details"
+                               Grid.Column="3"
+                               TextColor="Black"
+                               FontAttributes="Bold" />
+
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <!-- Create ViewCell structure-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <!-- Fill ViewCell data-->
+                                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                       Padding="5,0,0,0"
+                                       Grid.Column="0"
+                                       VerticalOptions="Center"
+                                       TextColor="Black" />
+
+                                <Label Text="{Binding Location}"
+                                       Padding="2,0"
+                                       Grid.Column="1"
+                                       VerticalOptions="Center"
+                                       TextColor="Black" />
+
+                                <Label Text="{Binding TotalCost, StringFormat='Test: {0:C}'}"
+                                       Grid.Column="2"
+                                       TextColor="Black"
+                                       VerticalOptions="Center"/>
+
+                                <ImageButton Source="detail_view.png"
+                                             Grid.Column="3"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center"
+                                             HeightRequest="30"
+                                             WidthRequest="30"
+                                             Command="{Binding Path = BindingContext.GetHistoryDetailsCommand, Source={x:Reference HistoryList}}"
+                                             CommandParameter="{Binding .}" />
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

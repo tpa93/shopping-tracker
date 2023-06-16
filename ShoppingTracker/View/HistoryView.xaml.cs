@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingTracker.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ArchiveView : ContentPage
+    public partial class HistoryView : ContentPage
     {
-        // Test comment for creating GITHUB commit
-        public ArchiveView()
+        public HistoryView()
         {
             InitializeComponent();
+
         }
     }
 }

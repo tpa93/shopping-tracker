@@ -21,7 +21,7 @@
         <FlexLayout Padding="5" JustifyContent="Center">
 
             <Image
-                Source="sv_header.png"
+                Source="svh.png"
                 />
 
         </FlexLayout>
@@ -87,12 +87,10 @@
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
                      AbsoluteLayout.LayoutBounds="0.95,1"
                      >
-                <Button x:Name="FinishShopping" 
-                    Text="&#x1F3C1;"
-                    FontSize="24"
-                    BackgroundColor="#2196F3"
-                    TextColor="White"
-                    CornerRadius="40"
+                <ImageButton 
+                    x:Name="FinishShopping" 
+                    BackgroundColor="Transparent"
+                    Source="finish_shopping.png"
                     HeightRequest="60"
                     WidthRequest="60"
                     Command="{Binding FinishShoppingCommand}"/>
