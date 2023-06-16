@@ -88,7 +88,7 @@
                                        VerticalOptions="Center"
                                        TextColor="Black" />
 
-                                <Label Text="{Binding TotalCost, StringFormat='Test: {0:C}'}"
+                                <Label Text="{Binding TotalCost, StringFormat='{0:C2}'}"
                                        Grid.Column="2"
                                        TextColor="Black"
                                        VerticalOptions="Center"/>

@@ -1,4 +1,5 @@
-﻿using ShoppingTracker.Model;
+﻿using Newtonsoft.Json;
+using ShoppingTracker.Model;
 using ShoppingTracker.Services;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,9 @@ namespace ShoppingTracker.ViewModel
 
         public ICommand GetHistoryDetailsCommand => new Command<ShoppingItemList>(GetHistoryDetails);
 
-        void GetHistoryDetails(ShoppingItemList selectedList)
+        async void GetHistoryDetails(ShoppingItemList selectedList)
         {
-            
+
         }
     }
 }

@@ -103,7 +103,7 @@ namespace ShoppingTracker.ViewModel
                 if (action == "Add total cost")
                 {
                     totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: totalCost);
-                    ActiveShoppingItemList.TotalCost = totalCost;
+                    ActiveShoppingItemList.TotalCost = Convert.ToDouble(totalCost);
                 }
 
                 /*

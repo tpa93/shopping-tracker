@@ -16,11 +16,12 @@ namespace ShoppingTracker.Model
 
         public string Name { get; set; }
 
-        public string TotalCost { get; set; }
+        public double TotalCost { get; set; }
 
         public DateTime ShoppingDate { get; set; }
 
         public string Location { get; set; }
+  
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; } = new ObservableCollection<ShoppingItem>();
