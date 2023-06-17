@@ -2,7 +2,7 @@
 
 ### Video Demo:  <URL HERE>
 
-#### ShoppingTracker - CS50 final project
+### ShoppingTracker - CS50 final project
 ShoppingTracker is an Android Xamarin Forms app which helps you to organize and track your shopping needs.
 With ShoppingTracker you can create wonderful shopping list, to take care that you don't forget anything during your daily or weekly shopping.
 It is possible to create, edit and delete templates f.e. base lists, which can be used everytime you go shopping and changed depending on what you need.
