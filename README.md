@@ -7,8 +7,6 @@ ShoppingTracker is an Android app developed with C# and Xamarin, which helps you
 With ShoppingTracker you can create wonderful shopping lists and templates, to take care that you don't forget anything during your daily or weekly shopping
 and log your done shopping to a shopping history.
 
-### Structue:
-
 #### Features:
 1. You can create templates, which you can use for shopping. It is possible to edit already created templates by adding or removing. After editing a previously created template, it is possible to overwrite it with the newly generated version.
 The created templates are saved to the local device in the applications data folder. It is possible too to create one-time shopping list, which get not saved as a template.
@@ -26,4 +24,6 @@ to see which items were checked of and gathered related to this specific shoppin
 For further development are several features planned. For example filtering shopping history data, adding geolocations as locations to the shopping history with the Google Places API or
 adding photos of bills.
 
-Additional to this features it is planned to setup a iOS version for this application. 
+Additional to this features it was planned to setup a iOS version for this application. During development it tourned out that it is necessary to own a Apple Developer License to debug and release iOS applications.
+Further information of an implementation of an iOS app will be released here.
+
