@@ -2,24 +2,28 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingTracker.View.HistoryDetailView">
+
+    <Shell.TitleView>
+        <FlexLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Text="{Binding Id, StringFormat='Shopping-id: {0}'}" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
+                <Label Text="{Binding Name, StringFormat='Template: {0}'}" Grid.Column="1" Grid.Row="0" FontAttributes="Bold"/>
+                <Label Text="{Binding TotalCost, StringFormat='Total cost: {0:C2}'}" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"/>
+                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Grid.Column="1" Grid.Row="1" FontAttributes="Bold"/>
+            </Grid>
+        </FlexLayout>
+    </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
-            <FlexLayout>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Text="{Binding Id, StringFormat='Shopping-id: {0}'}" Grid.Column="0" Grid.Row="0"/>
-                    <Label Text="{Binding Name, StringFormat='Template: {0}'}" Grid.Column="1" Grid.Row="0"/>
-                    <Label Text="{Binding TotalCost, StringFormat='Total cost: {0}'}" Grid.Column="0" Grid.Row="1"/>
-                    <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Grid.Column="1" Grid.Row="1"/>
-                </Grid>
-            </FlexLayout>
+            
 
             <BoxView HeightRequest="2" BackgroundColor="LightGray"/>
 
@@ -43,7 +47,7 @@
                                     <!-- Binding ShoppingItems fields to view controls -->
                                     <Label 
                                     Grid.Column ="0" 
-                                    Text="{Binding Count, StringFormat='{0}'}"
+                                    Text="{Binding Count, StringFormat='{0}x'}"
                                     VerticalTextAlignment="Center"
                                     FontAttributes="Bold"
                                     />

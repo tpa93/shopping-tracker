@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingTracker.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace ShoppingTracker.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StatisticsView : ContentPage
+    public partial class DeleteTemplateView : ContentPage
     {
-        public StatisticsView()
+        public DeleteTemplateView()
         {
             InitializeComponent();
         }

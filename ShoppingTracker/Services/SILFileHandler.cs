@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ShoppingTracker.Model;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ShoppingTracker.Services
 {
@@ -50,7 +51,6 @@ namespace ShoppingTracker.Services
                 // Read file and convert to object from JSON-string
                 string json = await file.ReadAllTextAsync();
                 ShoppingItemList newShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
-                newShoppingItemList.Name = templateName;
 
                 return newShoppingItemList;
             }
@@ -102,9 +102,6 @@ namespace ShoppingTracker.Services
             {
                 return null;
             }
-
-            
-
         }
     }
 }

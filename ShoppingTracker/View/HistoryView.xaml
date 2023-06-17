@@ -15,6 +15,7 @@
             <Image Source="archive.png" />
         </FlexLayout>
 
+
     </Shell.TitleView>
 
     <ContentPage.Content>
@@ -106,7 +107,47 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout>
+                        <BoxView   HeightRequest="2" 
+                                   BackgroundColor="LightGray"
+                                   Margin="5,0"/>
 
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0"
+                               Text="{Binding NumberOfShoppings, StringFormat='Total shoppings: {0}'}"
+                               FontAttributes="Bold"
+                               Padding="5,0,0,0"/>
+
+                            <Label Grid.Column="2"
+                               Text="{Binding TotalShoppingCost, StringFormat='Total cost: {0:C2}'}"
+                               FontAttributes="Bold"
+                               Padding="2,0,0,0"/>
+                            
+                            <ImageButton Grid.Column="3"
+                                         Source="settings.png"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         HeightRequest="30"
+                                         WidthRequest="30"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding SettingsMenuCommand}"/>
+
+
+                        </Grid>
+                    </StackLayout>
+
+                </ListView.Footer>
             </ListView>
         </ScrollView>
 

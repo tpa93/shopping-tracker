@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingTracker.View.DeleteTemplateView"
+             xmlns:local="clr-namespace:ShoppingTracker.ViewModel">
+
+    <ContentPage.BindingContext>
+        <local:DeleteTemplateViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <ListView ItemsSource="{Binding Templates}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Text="{Binding Templates}" 
+                                       Grid.Column="0"/>
+                                
+                                <ImageButton
+                                    Source="delete_item.png"
+                                    Grid.Column="1"
+                                    Command="{Binding Path=BindingContext.DeleteTemplateCommand, Source={x:Reference this}}"
+                                    CommandParameter="{Binding .}"/>
+                                    
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

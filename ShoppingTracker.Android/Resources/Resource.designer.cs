@@ -22100,7 +22100,7 @@ namespace ShoppingTracker.Droid
 			public const int csilh = 2131165281;
 			
 			// aapt resource value: 0x7F070062
-			public const int delete_shopping_item = 2131165282;
+			public const int delete_item = 2131165282;
 			
 			// aapt resource value: 0x7F070063
 			public const int design_fab_background = 2131165283;
@@ -22253,22 +22253,25 @@ namespace ShoppingTracker.Droid
 			public const int process_list = 2131165332;
 			
 			// aapt resource value: 0x7F070095
-			public const int statistics = 2131165333;
+			public const int settings = 2131165333;
 			
 			// aapt resource value: 0x7F070096
-			public const int statistics_2 = 2131165334;
+			public const int statistics = 2131165334;
 			
 			// aapt resource value: 0x7F070097
-			public const int svh = 2131165335;
+			public const int statistics_2 = 2131165335;
 			
 			// aapt resource value: 0x7F070098
-			public const int test_custom_background = 2131165336;
+			public const int svh = 2131165336;
 			
 			// aapt resource value: 0x7F070099
-			public const int tooltip_frame_dark = 2131165337;
+			public const int test_custom_background = 2131165337;
 			
 			// aapt resource value: 0x7F07009A
-			public const int tooltip_frame_light = 2131165338;
+			public const int tooltip_frame_dark = 2131165338;
+			
+			// aapt resource value: 0x7F07009B
+			public const int tooltip_frame_light = 2131165339;
 			
 			static Drawable()
 			{

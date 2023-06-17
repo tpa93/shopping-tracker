@@ -134,6 +134,7 @@ namespace ShoppingTracker.ViewModel
                     // Transfer current data state of ObservableCollection to "ShoppingView" and navigate to ShoppingView
                     PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                 }
+
                 else if (action == "Load template")
                 {
                     List<string> userTemplateNames = await SILFileHandler.GetAllSILTemplateNames();
@@ -145,8 +146,7 @@ namespace ShoppingTracker.ViewModel
                         return;
                     }
 
-                    ShoppingItemList loadedTemplate = await SILFileHandler.GetSILTemplateFromDevice(templateName);
-                    ActiveShoppingItemList = loadedTemplate;
+                    ActiveShoppingItemList = await SILFileHandler.GetSILTemplateFromDevice(templateName); 
 
                 }
               
@@ -177,8 +177,7 @@ namespace ShoppingTracker.ViewModel
                             return;
                         }
 
-                        // Transfer current data state of ObservableCollection to "ShoppingView"
-                        //App.ActiveShoppingItemList = shoppingItemListTemplate;
+                        // Pass data and open ShoppingView
                         PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
                     }
                 }
@@ -202,7 +201,7 @@ namespace ShoppingTracker.ViewModel
             while (templateName == string.Empty)
             {
 
-                templateName = await Application.Current.MainPage.DisplayPromptAsync("Define template name", "Name:");
+                templateName = await Application.Current.MainPage.DisplayPromptAsync("Define template name", "Name:", initialValue: ActiveShoppingItemList.Name);
 
                 // When prompt was canceled
                 if (templateName == null)
@@ -223,6 +222,10 @@ namespace ShoppingTracker.ViewModel
                     if (action == true)
                     {
                         return templateName;
+                    }
+                    else
+                    {
+                        templateName = string.Empty;
                     }
                 }
             }

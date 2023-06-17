@@ -12,9 +12,8 @@
         <Tab Title="Go Shopping">
             <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}" Route="goShoppingView"/>
         </Tab>
-        <Tab Title="Archive">
-            <ShellContent Title="Shopping History" ContentTemplate="{DataTemplate pages:View.HistoryView}" Route="goHistoryView"/>
-            <ShellContent Title="Statistics" ContentTemplate="{DataTemplate pages:View.StatisticsView}"/>
+        <Tab Title="Archiv">
+            <ShellContent ContentTemplate="{DataTemplate pages:View.HistoryView}" Route="goHistoryView"/>
         </Tab>
     </TabBar>
     

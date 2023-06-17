@@ -18,5 +18,16 @@ namespace ShoppingTracker.View
             InitializeComponent();
 
         }
+        
+        // Update ShoppingHistory displayed
+        protected override void OnAppearing()
+        {
+            var vM = BindingContext as HistoryViewModel;
+            if (vM != null) 
+            { 
+                vM.InitializeShoppingHistory();
+            }
+        }
+
     }
 }

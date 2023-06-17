@@ -92,7 +92,7 @@
                                 <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
                                 <ImageButton
                                             Grid.Column="3"
-                                            Source="delete_shopping_item.png"
+                                            Source="delete_item.png"
                                             BackgroundColor="Transparent"
                                             Scale="0.5"
                                             Command="{Binding Path=BindingContext.RemoveShoppingItemCommand, Source={x:Reference ItemList}}"
@@ -127,6 +127,7 @@
                    Placeholder="Enter item"
                    HorizontalTextAlignment="Center"
                    Text="{Binding NewItemName}"
+                   Completed="InputItem_Completed"
                    />
             
             <Entry x:Name="InputItemCount"
@@ -135,6 +136,7 @@
                    Placeholder="1x"
                    HorizontalTextAlignment="Center"
                    Text="{Binding NewItemCount}"
+                   Completed="InputItemCount_Completed"
                    />
         </Grid>
             

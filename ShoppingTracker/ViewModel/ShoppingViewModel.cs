@@ -188,5 +188,23 @@ namespace ShoppingTracker.ViewModel
                 ActiveShoppingItemList.ShoppingDate = DateTime.Now;
             }
         }
+
+        // Load template into ShoppingView
+        public ICommand LoadShoppingItemListTemplateCommand => new Command(LoadShoppingItemListTemplate);
+        async void LoadShoppingItemListTemplate()
+        {
+
+            List<string> userTemplateNames = await SILFileHandler.GetAllSILTemplateNames();
+
+            string templateName = await Application.Current.MainPage.DisplayActionSheet("Choose template for shopping:", "Cancel", null, userTemplateNames.ToArray());
+
+            if (templateName == "Cancel" || templateName == null)
+            {
+                return;
+            }
+
+            ActiveShoppingItemList = await SILFileHandler.GetSILTemplateFromDevice(templateName);
+        }
+
     }
 }
