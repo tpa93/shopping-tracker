@@ -170,7 +170,7 @@ namespace ShoppingTracker.ViewModel
         }
 
         // Prompt user how to handle shopping date
-        async void AddShoppingDateToActiveShoppingList()
+        async Task AddShoppingDateToActiveShoppingList()
         {
             if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
             {
