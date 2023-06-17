@@ -76,8 +76,9 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
+                                <!-- StringFormat='{}{0:dd.MM.yyyy HH:mm}'-->
                                 <!-- Fill ViewCell data-->
-                                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:MM/dd/yyyy HH:mm}'}"
                                        Padding="5,0,0,0"
                                        Grid.Column="0"
                                        VerticalOptions="Center"

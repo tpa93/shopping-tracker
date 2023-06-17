@@ -18,7 +18,7 @@ namespace ShoppingTracker.View
             InitializeComponent();
 
         }
-        
+
         // Update ShoppingHistory displayed
         protected override void OnAppearing()
         {

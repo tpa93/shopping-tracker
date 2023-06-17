@@ -12,7 +12,7 @@
         <Tab Title="Go Shopping">
             <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}" Route="goShoppingView"/>
         </Tab>
-        <Tab Title="Archiv">
+        <Tab Title="History">
             <ShellContent ContentTemplate="{DataTemplate pages:View.HistoryView}" Route="goHistoryView"/>
         </Tab>
     </TabBar>

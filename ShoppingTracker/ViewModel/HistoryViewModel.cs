@@ -30,8 +30,27 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
-        public int NumberOfShoppings { get; set;}
-        public double TotalShoppingCost { get; set;}
+        int numberOfShoppings;
+        public int NumberOfShoppings 
+        { 
+            get { return numberOfShoppings; } 
+            set
+            {
+                numberOfShoppings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        double totalShoppingCost;
+        public double TotalShoppingCost 
+        { 
+            get { return totalShoppingCost; }
+            set
+            { 
+                totalShoppingCost = value;
+                OnPropertyChanged();
+            }
+        }
 
         public HistoryViewModel() 
         {
@@ -64,6 +83,7 @@ namespace ShoppingTracker.ViewModel
         void CalculateTotalShoppingValues()
         {
             NumberOfShoppings = ShoppingHistory.Count;
+            TotalShoppingCost = 0;
             ShoppingHistory.ForEach(item => TotalShoppingCost += item.TotalCost);
         }
 

@@ -103,7 +103,15 @@ namespace ShoppingTracker.ViewModel
                 if (action == "Add total cost")
                 {
                     totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: totalCost);
-                    ActiveShoppingItemList.TotalCost = Convert.ToDouble(totalCost);
+                    if (totalCost != null)
+                    {
+                        ActiveShoppingItemList.TotalCost = Convert.ToDouble(totalCost);
+                    }
+                    else
+                    {
+                        ActiveShoppingItemList.TotalCost = 0;
+                        totalCost = String.Empty;
+                    }
                 }
 
                 /*
@@ -177,7 +185,7 @@ namespace ShoppingTracker.ViewModel
                 DateTime dateValue;
                 string shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date:", null);
 
-                while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate == null)
+                while (!DateTime.TryParse(shoppingDate, out dateValue) || shoppingDate == null)
                 {
                     shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date", "Please enter a valid date:");
                 }
