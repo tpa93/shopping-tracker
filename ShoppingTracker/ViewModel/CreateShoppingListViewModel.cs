@@ -83,7 +83,7 @@ namespace ShoppingTracker.ViewModel
 
         void AddNewShopingItem()
         {
-            if (NewItemCount == "" || NewItemCount == null)
+            if (NewItemCount == "" || NewItemCount == null )
             {
                 // Update field direct, to not trigger unnecessary event 
                 NewShoppingItem.Count = "1";
@@ -126,13 +126,12 @@ namespace ShoppingTracker.ViewModel
 
             if (action != "Cancel")
             {
-                ShoppingItemList shoppingItemListTemplate = new ShoppingItemList(ActiveShoppingItemList);
 
                 // Proceed with non-saved template to work with
                 if (action == "Go shopping")
                 {
                     // Transfer current data state of ObservableCollection to "ShoppingView" and navigate to ShoppingView
-                    PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
+                    PassDataAndFollowRoute("//goShoppingView", ActiveShoppingItemList);
                 }
 
                 else if (action == "Load template")
@@ -153,32 +152,32 @@ namespace ShoppingTracker.ViewModel
                 else
                 {
                     // Prompt user for template name
-                    shoppingItemListTemplate.Name = await PromptUserForTemplateName();
+                    ActiveShoppingItemList.Name = await PromptUserForTemplateName();
 
-                    if (shoppingItemListTemplate.Name == null)
+                    if (ActiveShoppingItemList.Name == null)
                     {
                         return;
                     }
 
                     // Save list as template
-                    if (action == "Save as template" && shoppingItemListTemplate.Name != null)
+                    if (action == "Save as template" && ActiveShoppingItemList.Name != null)
                     {
 
                         // Save template and check for success
-                        await SaveSILTemplate(shoppingItemListTemplate);
+                        await SaveSILTemplate(ActiveShoppingItemList);
                         return;
                     }
 
-                    else if (action == "Save as template & go shopping" && shoppingItemListTemplate.Name != null)
+                    else if (action == "Save as template & go shopping" && ActiveShoppingItemList.Name != null)
                     {
                         // Save template and check for success
-                        if(!await SaveSILTemplate(shoppingItemListTemplate))
+                        if(!await SaveSILTemplate(ActiveShoppingItemList))
                         {
                             return;
                         }
 
                         // Pass data and open ShoppingView
-                        PassDataAndFollowRoute("//goShoppingView", shoppingItemListTemplate);
+                        PassDataAndFollowRoute("//goShoppingView", ActiveShoppingItemList);
                     }
                 }
             }

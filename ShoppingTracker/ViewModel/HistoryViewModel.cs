@@ -94,6 +94,8 @@ namespace ShoppingTracker.ViewModel
 
                     // Update view
                     ShoppingHistory = null;
+                    NumberOfShoppings = 0;
+                    TotalShoppingCost = 0;
                 }
 
             }

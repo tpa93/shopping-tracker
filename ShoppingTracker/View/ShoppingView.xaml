@@ -60,6 +60,7 @@
                                     Text="{Binding Count,StringFormat='{0}x'}"
                                     VerticalTextAlignment="Center"
                                     FontAttributes="Bold"
+                                    TextColor="Black"
                                     />
 
                                     <Label 
@@ -67,13 +68,14 @@
                                     Text="{Binding Name}"
                                     VerticalTextAlignment="Center"
                                     FontSize="16"
+                                    TextColor="Black"
                                     />
 
                                     <!-- Green check mark symbol -->
                                     <Image
                                     Grid.Column="2"
                                     Source="green_check_mark.png"
-                                    IsVisible="{Binding Checked, Mode=TwoWay}"
+                                    IsVisible="{Binding Checked}"
                                     Scale="0.5"
                                     BackgroundColor="Transparent"
                                     />

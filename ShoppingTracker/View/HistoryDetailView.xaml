@@ -14,10 +14,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Text="{Binding Id, StringFormat='Shopping-id: {0}'}" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"/>
-                <Label Text="{Binding Name, StringFormat='Template: {0}'}" Grid.Column="1" Grid.Row="0" FontAttributes="Bold"/>
-                <Label Text="{Binding TotalCost, StringFormat='Total cost: {0:C2}'}" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"/>
-                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Grid.Column="1" Grid.Row="1" FontAttributes="Bold"/>
+                <Label Text="{Binding Name, StringFormat='Template: {0}'}" Grid.Column="0" Grid.Row="0" FontAttributes="Bold" TextColor="White"/>
+                <Label Text="{Binding TotalCost, StringFormat='Total cost: {0:C2}'}" Grid.Column="0" Grid.Row="1" FontAttributes="Bold" TextColor="White"/>
+                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Grid.Column="1" Grid.Row="1" FontAttributes="Bold" TextColor="White"/>
             </Grid>
         </FlexLayout>
     </Shell.TitleView>
@@ -50,6 +49,7 @@
                                     Text="{Binding Count, StringFormat='{0}x'}"
                                     VerticalTextAlignment="Center"
                                     FontAttributes="Bold"
+                                    TextColor="Black"
                                     />
 
                                     <Label 
@@ -57,6 +57,7 @@
                                     Text="{Binding Name}"
                                     VerticalTextAlignment="Center"
                                     FontSize="16"
+                                    TextColor="Black"
                                     />
 
                                     <!-- Green check mark symbol -->

@@ -170,14 +170,14 @@ namespace ShoppingTracker.ViewModel
         }
 
         // Prompt user how to handle shopping date
-        async Task AddShoppingDateToActiveShoppingList()
+        async void AddShoppingDateToActiveShoppingList()
         {
             if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
             {
                 DateTime dateValue;
                 string shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date:", null);
 
-                while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate != null)
+                while (!DateTime.TryParse(shoppingDate, out dateValue) && shoppingDate == null)
                 {
                     shoppingDate = await Application.Current.MainPage.DisplayPromptAsync("Enter shopping date", "Please enter a valid date:");
                 }

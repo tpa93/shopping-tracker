@@ -10,11 +10,12 @@
     
     <ContentPage.Content>
         <ScrollView>
-            <ListView ItemsSource="{Binding Templates}">
+            <ListView ItemsSource="{Binding Templates}"
+                      x:Name="TemplateList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            <Grid Padding="5,0,5,0">
                                 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="8*"/>
@@ -24,15 +25,20 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 
-                                <Label Text="{Binding Templates}" 
-                                       Grid.Column="0"/>
-                                
+                                <Label Text="{Binding}"
+                                       VerticalTextAlignment="Center"
+                                       Grid.Column="0"
+                                       FontSize="16"/>
+
                                 <ImageButton
                                     Source="delete_item.png"
                                     Grid.Column="1"
-                                    Command="{Binding Path=BindingContext.DeleteTemplateCommand, Source={x:Reference this}}"
+                                    Scale="0.5"
+                                    Command="{Binding Path=BindingContext.DeleteTemplateCommand, Source={x:Reference TemplateList}}"
                                     CommandParameter="{Binding .}"/>
                                     
+
+
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
