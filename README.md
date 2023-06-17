@@ -1,6 +1,6 @@
 # ShoppingTracker
 
-#### Video Demo:  <URL HERE>
+### Video Demo:  <URL HERE>
 
 #### ShoppingTracker - CS50 final project
 ShoppingTracker is an Android Xamarin Forms app which helps you to organize and track your shopping needs.
