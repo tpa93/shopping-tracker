@@ -1,4 +1,4 @@
-# YOUR PROJECT TITLE
+# ShoppingTracker
 #### Video Demo:  <URL HERE>
 #### Description:
 
