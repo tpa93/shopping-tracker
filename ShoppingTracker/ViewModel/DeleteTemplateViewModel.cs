@@ -12,6 +12,7 @@ namespace ShoppingTracker.ViewModel
 {
     internal class DeleteTemplateViewModel: INotifyPropertyChanged
     {
+        // All templates created by user
         ObservableCollection<string> templates = new ObservableCollection<string>();
 
         public ObservableCollection<string> Templates 
@@ -29,9 +30,14 @@ namespace ShoppingTracker.ViewModel
             InitializeTemplatesCollection();
         }
 
+        // Get all templates created by user
         public async void InitializeTemplatesCollection()
         {
             Templates = new ObservableCollection<string>(await SILFileHandler.GetAllSILTemplateNames());
+            if(Templates == null) 
+            {
+               Application.Current.MainPage.DisplayAlert("Error", "Loading templates data failed due to unknown error", "OK");
+            }
         }
 
 
@@ -42,6 +48,8 @@ namespace ShoppingTracker.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+
+        // Delete template selected by user - bound on ImageButton in ListView
         public ICommand DeleteTemplateCommand => new Command<string>(DeleteTemplate);
 
         async void DeleteTemplate(string  templateName) 

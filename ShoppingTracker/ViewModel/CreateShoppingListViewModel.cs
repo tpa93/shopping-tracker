@@ -18,8 +18,9 @@ namespace ShoppingTracker.ViewModel
 {
     internal class CreateShoppingListViewModel: INotifyPropertyChanged
     {
-
+        // Current ShoppingItemList used and edited by user
         ShoppingItemList activeShoppingItemList = new ShoppingItemList();
+
         public ShoppingItemList ActiveShoppingItemList 
         { 
             get
@@ -40,7 +41,7 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Use public Properties to get access to OnPropertyChanged, to clear user input fields after adding an item
+        // Store user input for new items
         private ShoppingItem NewShoppingItem { get; set; } = new ShoppingItem();
 
         public string NewItemName
@@ -69,7 +70,6 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
-        // Fire event if property bound to view is changed, to update view
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -78,7 +78,7 @@ namespace ShoppingTracker.ViewModel
 
 
 
-        // Add ShoppingItem with user input via input grid - Command is bound on "+" - button
+        // Add ShoppingItem to ActiveShoppingItemList - Command bound on ImageButton
         public ICommand AddShoppingItemCommand => new Command(AddNewShopingItem);
 
         void AddNewShopingItem()
@@ -102,10 +102,7 @@ namespace ShoppingTracker.ViewModel
 
 
 
-
-
-
-        // Remove ShoppingItem via trash bin image (button) - Command is bound in CreateShoppingListView.xaml on ImageButton
+        // Remove ShoppingItem selected by user - bound on ImageButton in ListView
         public ICommand RemoveShoppingItemCommand => new Command(RemoveShoppingItem);
 
         void RemoveShoppingItem(object o)
@@ -115,7 +112,7 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Process ShoppingItems according to choosed option on ActionSheet
+        // Process ShoppingItems according to choosed option
         public ICommand ProcessShoppingItemsCommand => new Command(ProcessShoppingItems);
 
         async void ProcessShoppingItems()
@@ -130,10 +127,11 @@ namespace ShoppingTracker.ViewModel
                 // Proceed with non-saved template to work with
                 if (action == "Go shopping")
                 {
-                    // Transfer current data state of ObservableCollection to "ShoppingView" and navigate to ShoppingView
+                    // Navigate to ShoppingView with current data state of ShoppingItemList
                     PassDataAndFollowRoute("//goShoppingView", ActiveShoppingItemList);
                 }
 
+                // Load ShoppingItemList template selected by user into CreateShoppingListView
                 else if (action == "Load template")
                 {
                     List<string> userTemplateNames = await SILFileHandler.GetAllSILTemplateNames();
@@ -148,7 +146,6 @@ namespace ShoppingTracker.ViewModel
                     ActiveShoppingItemList = await SILFileHandler.GetSILTemplateFromDevice(templateName); 
 
                 }
-              
                 else
                 {
                     // Prompt user for template name
@@ -163,20 +160,18 @@ namespace ShoppingTracker.ViewModel
                     if (action == "Save as template" && ActiveShoppingItemList.Name != null)
                     {
 
-                        // Save template and check for success
                         await SaveSILTemplate(ActiveShoppingItemList);
                         return;
                     }
 
+                    // Save list as template and navigate to ShoppingView with current data state of ShoppingItemList
                     else if (action == "Save as template & go shopping" && ActiveShoppingItemList.Name != null)
                     {
-                        // Save template and check for success
                         if(!await SaveSILTemplate(ActiveShoppingItemList))
                         {
                             return;
                         }
 
-                        // Pass data and open ShoppingView
                         PassDataAndFollowRoute("//goShoppingView", ActiveShoppingItemList);
                     }
                 }
@@ -185,7 +180,7 @@ namespace ShoppingTracker.ViewModel
 
         async Task<string> PromptUserForTemplateName()
         {
-            // Prompt user for template name
+
             string templateName = string.Empty;
 
             // Get all saved template names
@@ -249,7 +244,7 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Pass ShoppingItemsList to follow-up viewModel
+        // Navigate with current data state to specified route
         async void PassDataAndFollowRoute(string route, ShoppingItemList activeShoppingItemList)
         {
             string json = JsonConvert.SerializeObject(activeShoppingItemList);

@@ -18,6 +18,7 @@ namespace ShoppingTracker.ViewModel
 {
     internal class HistoryViewModel: INotifyPropertyChanged
     {
+        // Current ShoppingHistory
         ObservableCollection<ShoppingItemList> shoppingHistory = new ObservableCollection<ShoppingItemList>();
 
         public ObservableCollection<ShoppingItemList> ShoppingHistory 
@@ -30,6 +31,7 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
+        // Count of shoppings depending on items in ShoppingHistory
         int numberOfShoppings;
         public int NumberOfShoppings 
         { 
@@ -41,6 +43,7 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
+        // Shopping costs of all items in ShoppingHistory
         double totalShoppingCost;
         public double TotalShoppingCost 
         { 
@@ -57,7 +60,7 @@ namespace ShoppingTracker.ViewModel
             InitializeShoppingHistory();
         }
 
-        // Get default history
+        // Get history data
         public void InitializeShoppingHistory()
         {
             ShoppingHistory = DatabaseHandler.GetTotalShoppingHistory();
@@ -67,10 +70,11 @@ namespace ShoppingTracker.ViewModel
               Application.Current.MainPage.DisplayAlert("Error", "Loading shopping history failed due to unknown error", "OK");
             }
 
+            // Update total values
             CalculateTotalShoppingValues();
         }
 
-        // Execute navigation to details page related to selected ShoppingItemList
+        // Execute navigation to details page depending to selected ShoppingItemList
         public ICommand GetHistoryDetailsCommand => new Command<ShoppingItemList>(GetHistoryDetails);
 
         async void GetHistoryDetails(ShoppingItemList selectedList)
@@ -79,7 +83,7 @@ namespace ShoppingTracker.ViewModel
         }
 
 
-        // Calculate ListView footer values
+        // Calculate/Update ListView footer values
         void CalculateTotalShoppingValues()
         {
             NumberOfShoppings = ShoppingHistory.Count;
@@ -119,7 +123,7 @@ namespace ShoppingTracker.ViewModel
                 }
 
             }
-            // Navigate DeleteShoppingItemListTemplatesView to user 
+            // Navigate to DeleteShoppingItemListTemplatesView 
             else if (action == "Choose templates to delete")
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new DeleteTemplateView());

@@ -13,6 +13,7 @@ namespace ShoppingTracker
     {
         public App()
         {
+
             // Set culture according to device language
             CultureInfo culture = new CultureInfo(CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
             CultureInfo.DefaultThreadCurrentCulture = culture;

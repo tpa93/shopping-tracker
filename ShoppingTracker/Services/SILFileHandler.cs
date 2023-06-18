@@ -12,6 +12,7 @@ namespace ShoppingTracker.Services
     // ShoppingItemListTemplateHandler
     public static class SILFileHandler
     {
+
         // Save ShoppingItemListTemplate in templates folder on local device
         public async static Task<bool> SaveSILTemplateOnDevice(ShoppingItemList shoppingItemList)
         {
@@ -20,7 +21,6 @@ namespace ShoppingTracker.Services
             {   
                 // Create file
                 IFolder folder = await PCLStorage.FileSystem.Current.LocalStorage.CreateFolderAsync("templates", CreationCollisionOption.OpenIfExists);
-                string test = folder.Path;
                 string templateFile = shoppingItemList.Name + ".txt";
                 IFile file = await folder.CreateFileAsync(templateFile, CreationCollisionOption.ReplaceExisting);
 

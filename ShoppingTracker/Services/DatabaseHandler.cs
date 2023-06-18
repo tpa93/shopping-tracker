@@ -42,7 +42,7 @@ namespace ShoppingTracker.Services
                 return new ObservableCollection<ShoppingItemList>(db.GetAllWithChildren<ShoppingItemList>().OrderByDescending(x => x.ShoppingDate));
             }
 
-            catch (Exception ex) 
+            catch(Exception ex) 
             {
                 return null;
             }

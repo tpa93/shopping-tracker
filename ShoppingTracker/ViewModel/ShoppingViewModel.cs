@@ -24,13 +24,10 @@ namespace ShoppingTracker.ViewModel
     [QueryProperty(nameof(JSON), "JSON")]
     internal class ShoppingViewModel : INotifyPropertyChanged
     {
-        public ShoppingViewModel()
-        {
-            ActiveShoppingItemList = new ShoppingItemList();
-        }
+       
 
 
-        // JSON string received by CreateShoppingListTemplateViewModel
+        // JSON string received when routing to view, where view model is set as binding context
         string json;
         public string JSON
         {
@@ -43,13 +40,12 @@ namespace ShoppingTracker.ViewModel
             {
                 json = Uri.UnescapeDataString(value ?? String.Empty);
 
-                // Trigger setter of ActiveShoppingItemList to update view
                 ActiveShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
             }
         }
 
 
-        // Currently active ShoppingItemList
+        // Active ShoppingItemList
         ShoppingItemList activeShoppingItemList = new ShoppingItemList();
         public ShoppingItemList ActiveShoppingItemList
         {
@@ -65,6 +61,11 @@ namespace ShoppingTracker.ViewModel
 
         }
 
+        public ShoppingViewModel()
+        {
+            ActiveShoppingItemList = new ShoppingItemList();
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -72,7 +73,8 @@ namespace ShoppingTracker.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // EventToCommandBehavior for TappedItem Event - update tapped ShoppingItem as Checked/Not Checked
+
+        // EventToCommandBehavior for TappedItem event - update tapped ShoppingItem as checked off/ not checked off
         // Property is bound to Image in ShoppingView.xaml
         public ICommand TappedShoppingItemCommand => new Command<ShoppingItem>(SelectedShoppingItem);
         void SelectedShoppingItem(ShoppingItem selectedItem)
@@ -88,6 +90,7 @@ namespace ShoppingTracker.ViewModel
 
         }
 
+        // Finish shopping command triggered when clicking ImageButton bound to
         public ICommand FinishShoppingCommand => new Command(FinishShopping);
         async void FinishShopping()
         {
@@ -97,9 +100,9 @@ namespace ShoppingTracker.ViewModel
 
             while (action != "Cancel" && action != "Finish shopping")
             {
+                // Prompt user for adding additional informations
                 action = await Application.Current.MainPage.DisplayActionSheet("Add extra information to shopping list", "Cancel", null, "Add total cost", "Add location", "Finish shopping");
 
-                // Prompt user for total shopping cost
                 if (action == "Add total cost")
                 {
                     totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: totalCost);
@@ -124,13 +127,13 @@ namespace ShoppingTracker.ViewModel
                 }
                 */
 
-                // Prompt user for adding location
                 else if (action == "Add location")
                 {
                     location = await Application.Current.MainPage.DisplayPromptAsync("Location", "Enter shopping location:", initialValue: location);
                     ActiveShoppingItemList.Location = location;
 
                 }
+
                 // Save ActiveShoppingItemList with eventually added costs
                 else if (action == "Finish shopping")
                 {
@@ -139,8 +142,10 @@ namespace ShoppingTracker.ViewModel
                         return;
                     }
 
+                    // Prompt user to set a shopping date
                     await AddShoppingDateToActiveShoppingList();
 
+                    // Save data to database
                     if(! DatabaseHandler.InsertShoppingItemList(ActiveShoppingItemList)) 
                     {
                         await Application.Current.MainPage.DisplayAlert("Error", "Shopping list could not be saved to history", "Ok");
@@ -154,10 +159,9 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
-        // Check ActiveShoppingList for unchecked items and prompt user how to handle
+        // Check ActiveShoppingList for unchecked items and display hint with prompt how to handle
         async Task<bool> IgnoreMissingItems()
         {
-            // Check for unchecked items and propmt user to react if he wants to continue to finish shopping, when there are unchecked items
             foreach (var item in ActiveShoppingItemList.ShoppingItems)
             {
                 if (item.Checked == false)

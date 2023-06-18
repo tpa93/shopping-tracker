@@ -9,41 +9,25 @@
         <local:CreateShoppingListViewModel/>
     </ContentPage.BindingContext>
     
-    <!-- Title of this (SHELL) view -->
+
     <Shell.TitleView>
         <FlexLayout Padding="5" JustifyContent="Center">
-            <!-- 
-            <Label
-                Text="Create"
-                FontSize="18"
-                TextColor="White"
-                VerticalTextAlignment="Center"/>
-            -->
-            
+
             <Image
                 Source="csilh.png"
                 Margin="5,0,5,0"/>
-            <!-- 
-            <Label
-                Text="Template"
-                FontSize="18"
-                TextColor="White"
-                VerticalTextAlignment="Center"/>
-            -->
 
         </FlexLayout>
     </Shell.TitleView>
-    
-    <!-- Main view -->
+
+
     <AbsoluteLayout>
-        
-        <!-- Main data view -->
         <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8" Padding="5">
-            <!-- Binding ShoppingItems object to the ListView -->
             <ListView x:Name="ItemList"
                   SelectionMode="None"
                   ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}">
-                <!-- Create template entry for a shopping item-->
+                
+                <!-- Display shopping item -->
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <ViewCell>
@@ -58,7 +42,7 @@
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Binding ShoppingItems fields to view controls -->
+                                <!-- ShoppingItem.Count -->
                                 <Label 
                                     Grid.Column ="0" 
                                     Text="{Binding Count,StringFormat='{0}x'}"
@@ -67,6 +51,7 @@
                                     FontAttributes="Bold"
                                     />
 
+                                <!-- ShoppingItem.Name -->
                                 <Label 
                                     Grid.Column ="1" 
                                     Text="{Binding Name}"
@@ -74,14 +59,8 @@
                                     VerticalTextAlignment="Center"
                                     FontSize="16"
                                     />
-
-                               
-                                <!-- Create image button to delete ShoppingItem-->
-                                <!-- Path sets source of CommandMethod (BindingContext = ItemListViewModel) -->
-                                <!-- The is the RemoveShoppingItemCommand method implemented -->
-                                <!-- So the current ShoppingItem from ShoppingItems (OC) in ListView gets these command bound -->
-                                <!-- CommandParameter sets the parameter passed into the method bound to the command -->
-                                <!-- The "." stands for the current ShoppingItem in ListView/ ShoppingItems (OC) -->
+                                
+                                <!-- Button for removing item-->
                                 <ImageButton
                                             Grid.Column="3"
                                             Source="delete_item.png"
@@ -98,7 +77,7 @@
             </ListView>
         </ScrollView>
 
-        <!-- Adding control for user input -->
+        <!-- Input entries for adding new shopping item -->
         <Grid x:Name="GridAddItem" 
               Padding="0,0,0,0"
               AbsoluteLayout.LayoutFlags="PositionProportional,SizeProportional" 
@@ -132,10 +111,7 @@
                    />
         </Grid>
             
-        <!-- Absolut positioned button, that does not scroll -->
-        <!-- LayoutFlags "PP" sets the first to values of LayoutBounds(-> x <-, -> y <-,height,width) proportional -->
-        <!-- So that the buttons position is positioned absolut depending from the display -->
-        <!-- 0,0 = upper left corner & 1,1 downer right corner-->
+        <!-- Downer right corner positioned buttons for adding new shopping item -->
         <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
                      AbsoluteLayout.LayoutBounds="0.95,1">
 
@@ -146,7 +122,7 @@
                          WidthRequest="50"
                          Command="{Binding AddShoppingItemCommand}"
                          />
-
+            <!-- For processing loaded or created template -->
             <ImageButton x:Name="ProcessList"
                          Source="process_list.png"
                          BackgroundColor="Transparent"

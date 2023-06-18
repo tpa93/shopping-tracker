@@ -16,8 +16,10 @@ namespace ShoppingTracker.Model
 
         public string Name { get; set; }
 
+        // Required count of item
         public string Count { get; set; }
 
+        // Check off state of item
         bool _checked;
         public bool Checked 
         { 
@@ -29,8 +31,10 @@ namespace ShoppingTracker.Model
             }
         }
 
+        // FKey for referencing to/in ShoppingItemList
         [ForeignKey(typeof(ShoppingItemList))]
         public int ShoppingItemListId { get; set; }
+
 
         public ShoppingItem(string name, string count) 
         { 
@@ -40,15 +44,8 @@ namespace ShoppingTracker.Model
         
         }
 
-        public ShoppingItem(string name, string count, bool check)
-        {
-            this.Name = name;
-            this.Count = count;
-            this.Checked = check;
-
-        }
-        public ShoppingItem() { }
-
+        public ShoppingItem() 
+        { }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

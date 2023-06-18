@@ -24,9 +24,9 @@
             <ListView x:Name="HistoryList"
                       ItemsSource="{Binding ShoppingHistory}"
                       SelectionMode="None">
+                
                 <ListView.Header>
                     <Grid>
-                        <!-- Create Header structure -->
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="4*" />
@@ -37,10 +37,9 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <!-- Fill Header data -->
                         <Rectangle Grid.ColumnSpan="4"
                                    BackgroundColor="#2196F3" />
-                        <Label Text="Date"
+                        <Label Text="Date D/M/Y"
                                Grid.Column="0"
                                Padding="5,0,0,0"
                                TextColor="White"
@@ -65,7 +64,6 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
-                                <!-- Create ViewCell structure-->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*" />
                                     <ColumnDefinition Width="4*" />
@@ -77,19 +75,21 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- StringFormat='{}{0:dd.MM.yyyy HH:mm}'-->
-                                <!-- Fill ViewCell data-->
-                                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:MM/dd/yyyy HH:mm}'}"
+                                <!-- ShoppingItemList.ShoppingDate -->
+                                <Label Text="{Binding ShoppingDate, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}"
                                        Padding="5,0,0,0"
                                        Grid.Column="0"
                                        VerticalOptions="Center"
                                        TextColor="Black" />
 
+                                <!-- ShoppingItemList.ShoppingDate -->
                                 <Label Text="{Binding Location}"
                                        Padding="2,0"
                                        Grid.Column="1"
                                        VerticalOptions="Center"
                                        TextColor="Black" />
 
+                                <!-- ShoppingItemList.ShoppingDate -->
                                 <Label Text="{Binding TotalCost, StringFormat='{0:C2}'}"
                                        Grid.Column="2"
                                        TextColor="Black"
@@ -124,7 +124,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-
+                            
+                            <!-- Total values of entire shopping history -->
                             <Label Grid.Column="0"
                                Text="{Binding NumberOfShoppings, StringFormat='Total shoppings: {0}'}"
                                FontAttributes="Bold"
@@ -135,6 +136,7 @@
                                FontAttributes="Bold"
                                Padding="2,0,0,0"/>
                             
+                            <!-- ImageButton for providing settings menu -->
                             <ImageButton Grid.Column="3"
                                          Source="settings.png"
                                          HorizontalOptions="Center"

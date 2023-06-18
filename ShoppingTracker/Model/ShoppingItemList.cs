@@ -14,44 +14,24 @@ namespace ShoppingTracker.Model
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
+        // Name of list/ template
         public string Name { get; set; }
-
+        
+        // Total shopping cost
         public double TotalCost { get; set; }
 
         public DateTime ShoppingDate { get; set; }
 
+        // Shopping location
         public string Location { get; set; }
   
-
+        // Shopping items added to list
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; } = new ObservableCollection<ShoppingItem>();
-
-
 
         public ShoppingItemList() 
         { 
 
-        }
-
-        public ShoppingItemList(ObservableCollection<ShoppingItem> Items)
-        {
-            this.ShoppingItems = Items;
-        }
-
-        public ShoppingItemList(ObservableCollection<ShoppingItem> shoppingItems, string name)
-        {
-            this.ShoppingItems = shoppingItems;
-            this.Name = name;
-        }
-
-        public ShoppingItemList(ShoppingItemList shoppingItemList) 
-        { 
-            this.Name=shoppingItemList.Name;
-            this.TotalCost = shoppingItemList.TotalCost;
-            this.ShoppingDate = shoppingItemList.ShoppingDate;
-            this.Location = shoppingItemList.Location;
-            this.ShoppingItems = shoppingItemList.ShoppingItems;
-        
         }
 
     }

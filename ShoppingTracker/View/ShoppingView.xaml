@@ -31,15 +31,16 @@
         <AbsoluteLayout>
 
             <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
-                <!-- Binding ShoppingItems object to the ListView -->
                 <ListView x:Name="ItemList"
                           ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}"
                           SelectionMode="None">
+                    <!-- Bind TappedShoppingItemCommand to ItemTapped event -->
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding TappedShoppingItemCommand}" EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}">
                         </behaviors:EventToCommandBehavior>
                     </ListView.Behaviors>
-                    <!-- Create template entry for a shopping item-->
+                    
+                    <!-- Display shopping item -->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -54,7 +55,7 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- Binding ShoppingItems fields to view controls -->
+                                    <!-- ShoppingItem.Count -->
                                     <Label 
                                     Grid.Column ="0" 
                                     Text="{Binding Count,StringFormat='{0}x'}"
@@ -62,7 +63,8 @@
                                     FontAttributes="Bold"
                                     TextColor="Black"
                                     />
-
+                                    
+                                    <!-- ShoppingItem.Name -->
                                     <Label 
                                     Grid.Column ="1" 
                                     Text="{Binding Name}"
@@ -71,7 +73,7 @@
                                     TextColor="Black"
                                     />
 
-                                    <!-- Green check mark symbol -->
+                                    <!-- ShoppingItem.Checked -->
                                     <Image
                                     Grid.Column="2"
                                     Source="green_check_mark.png"
@@ -86,6 +88,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
+            
+            <!-- Downer right corner positioned buttons for loading template and finish shopping -->
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
                      AbsoluteLayout.LayoutBounds="0.95,1"
                      >
@@ -96,14 +100,16 @@
                          WidthRequest="60"
                          Command="{Binding LoadShoppingItemListTemplateCommand}"
                          />
-                
+
                 <ImageButton 
                     x:Name="FinishShopping" 
                     BackgroundColor="Transparent"
                     Source="finish_shopping.png"
                     HeightRequest="60"
                     WidthRequest="60"
-                    Command="{Binding FinishShoppingCommand}"/>
+                    Command="{Binding FinishShoppingCommand}"
+                    />
+
             </StackLayout>
 
         </AbsoluteLayout>
