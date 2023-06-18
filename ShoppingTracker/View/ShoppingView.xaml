@@ -91,8 +91,8 @@
             
             <!-- Downer right corner positioned buttons for loading template and finish shopping -->
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" 
-                     AbsoluteLayout.LayoutBounds="0.95,1"
-                     >
+                     AbsoluteLayout.LayoutBounds="0.95,1">
+                
                 <ImageButton x:Name="ProcessList"
                          Source="process_list.png"
                          BackgroundColor="Transparent"
