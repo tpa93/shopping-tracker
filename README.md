@@ -24,5 +24,3 @@ The data saved to the history is stored in a SQLite database file locally on the
 4. Possible to delete unused shopping list templates and clear history data
 
 An iOS version of the application was planned, but during development it tourned out that it is necessary to own a apple developer license to do so.
-
-
