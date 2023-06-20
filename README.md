@@ -27,4 +27,4 @@ A click on "finish shopping" in the "process list button" sets the current or an
 
 An iOS version of the application was planned, but during development it tourned out that it is necessary to own a apple developer license to do so.
 
-app icons for app icon, launcher icon, buttons and symbols by: https://www.flaticon.com/free-icons/
+- app icons for app icon, launcher icon, buttons and symbols by: https://www.flaticon.com/free-icons/ -
