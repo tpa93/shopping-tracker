@@ -96,7 +96,7 @@
                                        TextColor="Black"
                                        VerticalOptions="Center"/>
 
-                                <ImageButton Source="camera.png"
+                                <ImageButton Source="bill.png"
                                              Grid.Column="3"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center"

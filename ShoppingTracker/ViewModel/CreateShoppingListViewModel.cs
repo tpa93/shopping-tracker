@@ -231,6 +231,7 @@ namespace ShoppingTracker.ViewModel
             if (!await SILFileHandler.SaveSILTemplateOnDevice(shoppingItemList))
             {
                 await Application.Current.MainPage.DisplayAlert("Template could not be saved due to unknown error", null, "Cancel");
+                ActiveShoppingItemList.Name = String.Empty;
                 return false;
             }
             else
