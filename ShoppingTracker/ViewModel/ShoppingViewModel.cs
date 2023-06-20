@@ -2,21 +2,14 @@
 using ShoppingTracker.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using System.Threading.Tasks;
-using Xamarin.CommunityToolkit.ObjectModel;
-using System.Runtime.InteropServices.ComTypes;
-using System.Linq;
-using Xamarin.CommunityToolkit.UI.Views;
-using Xamarin.Essentials;
-using System.ComponentModel.Design;
 using ShoppingTracker.Services;
+using ShoppingTracker.View;
+
 
 namespace ShoppingTracker.ViewModel
 {
@@ -24,8 +17,6 @@ namespace ShoppingTracker.ViewModel
     [QueryProperty(nameof(JSON), "JSON")]
     internal class ShoppingViewModel : INotifyPropertyChanged
     {
-       
-
 
         // JSON string received when routing to view, where view model is set as binding context
         string json;
@@ -39,7 +30,6 @@ namespace ShoppingTracker.ViewModel
             set
             {
                 json = Uri.UnescapeDataString(value ?? String.Empty);
-
                 ActiveShoppingItemList = JsonConvert.DeserializeObject<ShoppingItemList>(json);
             }
         }
@@ -105,10 +95,18 @@ namespace ShoppingTracker.ViewModel
 
                 if (action == "Add total cost")
                 {
-                    totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: totalCost);
+                    totalCost = await Application.Current.MainPage.DisplayPromptAsync("Total cost", "Enter total shopping cost:", initialValue: Convert.ToString(ActiveShoppingItemList.TotalCost));
+
                     if (totalCost != null)
                     {
-                        ActiveShoppingItemList.TotalCost = Convert.ToDouble(totalCost);
+                        try
+                        {
+                            ActiveShoppingItemList.TotalCost = Convert.ToDouble(totalCost);
+                        }
+                        catch (Exception ex)
+                        {
+                           await Application.Current.MainPage.DisplayAlert("Invalid input", "Please enter a valid value.", "Ok");
+                        }   
                     }
                     else
                     {
@@ -118,14 +116,16 @@ namespace ShoppingTracker.ViewModel
                 }
 
                 /*
-                // Prompt user for taking or selecting a photo from bill
+                // Prompt user for taking or selecting a photo off bill
                 else if (action == "Add photo of bill")
                 {
                     // Because it is currently not possible to use the Mediapicker on Android 13.0 API 33 according to created GITHUB issue
                     // https://github.com/xamarin/Essentials/issues/2041
+                    var photo = await MediaPicker.PickPhotoAsync();
 
                 }
                 */
+
 
                 else if (action == "Add location")
                 {
@@ -134,10 +134,10 @@ namespace ShoppingTracker.ViewModel
 
                 }
 
-                // Save ActiveShoppingItemList with eventually added costs
+                // Save ActiveShoppingItemList
                 else if (action == "Finish shopping")
                 {
-                    if(!await IgnoreMissingItems())
+                    if (!await IgnoreMissingItems())
                     {
                         return;
                     }
@@ -145,8 +145,9 @@ namespace ShoppingTracker.ViewModel
                     // Prompt user to set a shopping date
                     await AddShoppingDateToActiveShoppingList();
 
+
                     // Save data to database
-                    if(! DatabaseHandler.InsertShoppingItemList(ActiveShoppingItemList)) 
+                    if (!DatabaseHandler.InsertShoppingItemList(ActiveShoppingItemList))
                     {
                         await Application.Current.MainPage.DisplayAlert("Error", "Shopping list could not be saved to history", "Ok");
                     }
@@ -181,7 +182,7 @@ namespace ShoppingTracker.ViewModel
             return true;
         }
 
-        // Prompt user how to handle shopping date
+        // Prompt user how to set shopping date
         async Task AddShoppingDateToActiveShoppingList()
         {
             if (!await Application.Current.MainPage.DisplayAlert("Shopping date", "Do you want to set the current date and time as shopping date?", "Yes", "No"))
@@ -201,6 +202,8 @@ namespace ShoppingTracker.ViewModel
             }
         }
 
+
+
         // Load template into ShoppingView
         public ICommand LoadShoppingItemListTemplateCommand => new Command(LoadShoppingItemListTemplate);
         async void LoadShoppingItemListTemplate()
@@ -218,5 +221,32 @@ namespace ShoppingTracker.ViewModel
             ActiveShoppingItemList = await SILFileHandler.GetSILTemplateFromDevice(templateName);
         }
 
+
+        // Add photo of bill
+        public ICommand AddPhotoCommand => new Command(AddPhoto);
+        async void AddPhoto()
+        {
+            if (ActiveShoppingItemList.PhotoOfBill == null)
+            {
+                var photoView = new PhotoView();
+                photoView.UserActionOnPhoto += OnActionOnPhotoView;
+                await Application.Current.MainPage.Navigation.PushAsync(photoView);
+            }
+            else
+            {
+                var photoView = new PhotoView(ActiveShoppingItemList.PhotoOfBill, true);
+                await Application.Current.MainPage.Navigation.PushAsync(photoView);
+            }
+        }
+
+        // React to event in view
+        void OnActionOnPhotoView(object sender, byte[] image)
+        {
+            if (image != null)
+            {
+                ActiveShoppingItemList.PhotoOfBill = image;
+                Application.Current.MainPage.DisplayAlert("Photo of bill attached", null, "Ok");
+            }
+        }
     }
 }

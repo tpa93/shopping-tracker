@@ -29,6 +29,11 @@ namespace ShoppingTracker.Model
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<ShoppingItem> ShoppingItems { get; set; } = new ObservableCollection<ShoppingItem>();
 
+        
+        // Photo of bill as byte array
+        public byte[] PhotoOfBill { get; set; }
+       
+
         public ShoppingItemList() 
         { 
 

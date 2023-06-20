@@ -68,7 +68,8 @@
                                     <ColumnDefinition Width="3*" />
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -95,8 +96,17 @@
                                        TextColor="Black"
                                        VerticalOptions="Center"/>
 
-                                <ImageButton Source="detail_view.png"
+                                <ImageButton Source="camera.png"
                                              Grid.Column="3"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center"
+                                             HeightRequest="30"
+                                             WidthRequest="30"
+                                             Command="{Binding Path = BindingContext.ShowPhotoOfBillCommand, Source={x:Reference HistoryList}}"
+                                             CommandParameter="{Binding .}" />
+                                
+                                <ImageButton Source="detail_view.png"
+                                             Grid.Column="4"
                                              VerticalOptions="Center"
                                              HorizontalOptions="Center"
                                              HeightRequest="30"

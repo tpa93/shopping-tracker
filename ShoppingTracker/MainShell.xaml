@@ -6,10 +6,10 @@
     x:Class="ShoppingTracker.MainShell">
 
     <TabBar>
-        <Tab Title="Create List">
+        <Tab Title="Create">
             <ShellContent ContentTemplate="{DataTemplate pages:View.CreateShoppingListView}"/>
         </Tab>
-        <Tab Title="Go Shopping">
+        <Tab Title="Shopping">
             <ShellContent ContentTemplate="{DataTemplate pages:View.ShoppingView}" Route="goShoppingView"/>
         </Tab>
         <Tab Title="History">

@@ -9,8 +9,6 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
-using PCLStorage;
 using ShoppingTracker.Services;
 using Newtonsoft.Json;
 
@@ -83,21 +81,20 @@ namespace ShoppingTracker.ViewModel
 
         void AddNewShopingItem()
         {
-            if (NewItemCount == "" || NewItemCount == null )
+            if (NewItemCount == "" || NewItemCount == null || !Double.TryParse(NewShoppingItem.Count, out double result))
             {
                 // Update field direct, to not trigger unnecessary event 
                 NewShoppingItem.Count = "1";
             }
             if (NewItemName != "" && NewItemName != null)
             {
-                // Use temp item, because the values of NewShoppingItem will be overwritten, when clearing properties in the step afterwards
+                // Use new item, because the values of NewShoppingItem will be overwritten, when clearing properties in the step afterwards
                 ActiveShoppingItemList.ShoppingItems.Add(new ShoppingItem(NewItemName, NewItemCount));
 
+                NewItemName = "";
+                NewItemCount = "";
             }
-
-            // Clear user input fields with OnPropertyChanged()
-            NewItemName = "";
-            NewItemCount = "";
+            
         }
 
 

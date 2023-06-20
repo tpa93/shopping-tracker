@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="ShoppingTracker.View.PhotoView">
+
+    <Shell.TitleView>
+        <FlexLayout JustifyContent="Center"
+                    Padding="0,5">
+            <Image Source="bill.png" />
+        </FlexLayout>
+    </Shell.TitleView>
+
+
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <Grid x:Name="camera_view_grid"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="FillAndExpand">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                
+                <xct:CameraView
+                        x:Name="camera_test"
+                        CaptureMode="Photo"
+                        FlashMode="Off"
+                        Grid.Row="0"
+                        HorizontalOptions="FillAndExpand"
+                        MediaCaptured="cameraView_MediaCaptured"
+                        VerticalOptions="FillAndExpand"/>
+
+                <Button 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Clicked="TakePhoto_Clicked"
+                        x:Name="TakePhoto"
+                        Text="Take a photo"/>
+            </Grid>
+            
+            <Grid x:Name="image_view_grid"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Image x:Name="image_test"
+                       Aspect="AspectFill"
+                       Grid.Row="0"/>
+
+                 <Button x:Name="Save"
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         Text="Save photo"
+                         Clicked="Save_Clicked"/>
+                
+                <Button x:Name="New"
+                        Grid.Row="2"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Text="Take new photo"
+                        Clicked="New_Clicked"/>
+                
+                <Button x:Name="Cancel"
+                        Grid.Row="3"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Text="Cancel"
+                        Clicked="Cancel_Clicked"/>
+                        
+            </Grid>
+            
+        </StackLayout>
+        
+                
+    </ContentPage.Content>
+</ContentPage>

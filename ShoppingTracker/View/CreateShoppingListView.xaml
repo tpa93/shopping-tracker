@@ -15,14 +15,14 @@
 
             <Image
                 Source="csilh.png"
-                Margin="5,0,5,0"/>
+                />
 
         </FlexLayout>
     </Shell.TitleView>
 
 
     <AbsoluteLayout>
-        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8" Padding="5">
+        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.8">
             <ListView x:Name="ItemList"
                   SelectionMode="None"
                   ItemsSource="{Binding ActiveShoppingItemList.ShoppingItems}">
@@ -62,7 +62,7 @@
                                 
                                 <!-- Button for removing item-->
                                 <ImageButton
-                                            Grid.Column="3"
+                                            Grid.Column="2"
                                             Source="delete_item.png"
                                             BackgroundColor="Transparent"
                                             Scale="0.5"

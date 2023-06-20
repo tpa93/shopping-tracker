@@ -1,16 +1,10 @@
-﻿using Newtonsoft.Json;
-using ShoppingTracker.Model;
+﻿using ShoppingTracker.Model;
 using ShoppingTracker.Services;
 using ShoppingTracker.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -80,6 +74,15 @@ namespace ShoppingTracker.ViewModel
         async void GetHistoryDetails(ShoppingItemList selectedList)
         {
             await Application.Current.MainPage.Navigation.PushAsync(new HistoryDetailView(selectedList));
+  
+        }
+
+        public ICommand ShowPhotoOfBillCommand => new Command<ShoppingItemList>(ShowPhotoOfBill);
+
+        void ShowPhotoOfBill(ShoppingItemList selectedList)
+        {
+            var photoView = new PhotoView(selectedList.PhotoOfBill, false);
+            Application.Current.MainPage.Navigation.PushAsync(photoView);
         }
 
 
@@ -97,6 +100,7 @@ namespace ShoppingTracker.ViewModel
 
         async void ProvideSettingsMenu()
         {
+
             string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Clear shopping history", "Choose templates to delete");
 
             // User cancelled action
