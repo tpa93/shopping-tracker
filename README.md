@@ -9,8 +9,8 @@ On top of that the app creates a log of your done shopping data, inserting it in
 
 ### Features:
 #### Create one-time shopping list and shopping list templates for re-use ("Create"-tab)
-1. Create templates which can be used for shopping. It is possible to edit already created templates by adding or removing items. After editing a previously created template, it is possible to overwrite it with its newer version.
-Created templates are saved to the local device. Unsaved lists can be used in the current app session.
+1. Create templates which can be used for shopping. It is possible to edit already created templates by adding or removing items. After editing a previously created template, it is possible to overwrite it with its newer version. Created templates are saved to the local device.
+Unsaved lists can be used in the current app session.
 
 #### Shopping experience ("Shopping"-tab)
 2. Using one-time lists when processing from create list screen or loading previously created shopping list templates into the shopping view when clicking on the "load list button" allows to easily keep track of the shopping progress during shopping by checking off already gathered items.
@@ -24,6 +24,12 @@ A click on "finish shopping" in the "process list button" sets the current or an
 
 #### Settings
 5. Possible to delete unused shopping list templates and clear history data
+
+#### Known issues
+[MediaPicker issue](https://github.com/xamarin/Essentials/issues/2041)
+
+[Photos taken are incorrectly rotated](https://github.com/xamarin/XamarinCommunityToolkit/issues/1695)
+
 
 An iOS version of the application was planned, but during development it tourned out that it is necessary to own a apple developer license to do so.
 
