@@ -9,7 +9,7 @@ On top of that the app creates a log of your done shopping data, inserting it in
 
 ### Features:
 #### Create one-time shopping list and shopping list templates for re-use ("Create"-tab)
-1. Create templates which can be used for shopping. It is possible to edit already created templates by adding or removing items. After editing a previously created template, it is possible to overwrite it with its newer version. Created templates are saved to the local device.
+1. Create templates which can be used for shopping. It is possible to edit already created templates by adding or removing items.<br> After editing a previously created template, it is possible to overwrite it with its newer version. Created templates are saved to the local device.
 Unsaved lists can be used in the current app session.
 
 #### Shopping experience ("Shopping"-tab)
